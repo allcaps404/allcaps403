@@ -8,10 +8,9 @@
                 <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                     <h3 class="font-weight-bold">Overview</h3>
                     <div class="card">
-                        <div class="card-body">
+                        <!-- <div class="card-body">
                             <p>Welcome to your attendance monitoring dashboard.</p>
-                            <!-- Add any introductory text or key information here -->
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                
