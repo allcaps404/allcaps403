@@ -1,7 +1,7 @@
 <nav class="navbar col-lg-15 col-15 p-0 fixed-top d-flex flex-row">
     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
         <a class="navbar-brand brand-logo mr-10" href="">
-            <img src="{{ asset('images/bitslog.png') }}" class="mr-8" alt="logo" style="width: 150px; height: auto;"/>
+            <img src="{{ asset('images/slsulogo.png') }}" class="mr-8" alt="logo" style="width: 150px; height: auto;"/>
         </a>
         <a class="navbar-brand brand-logo-mini" href="">
             <img src="{{ asset('images/logo.png') }}" alt="logo" style="width: 300px; height: 50px;"/>
@@ -11,13 +11,14 @@
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
     <span class="icon-menu"></span>
     </button>
+    <marquee behavior="scroll" direction="left">Real-Time IoT Monitoring and Automation of Irrigation and Fogger System for Vegetable Seedlings</marquee>
         
         <!-- Notification Icon -->
-        <!-- <ul class="navbar-nav mr-lg-2">
+        <ul class="navbar-nav mr-lg-2">
             <li class="nav-item dropdown">
                 <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
                     <i class="icon-bell"></i>
-                    <span class="count bg-danger">3</span> 
+                    <span class="count bg-danger"></span> 
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="notificationDropdown">
                     <h6 class="p-3 mb-0">Notifications</h6>
@@ -43,7 +44,7 @@
                     </a>
                 </div>
             </li>
-        </ul> -->
+        </ul>
         <!-- End of Notification Icon -->
 
         <!-- User Profile Dropdown -->

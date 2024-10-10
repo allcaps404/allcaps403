@@ -3,7 +3,7 @@
 @section('content')
 
 <style>
-    body, html {
+     body, html {
         margin: 0;
         padding: 0;
         width: 100%;
@@ -36,17 +36,31 @@
     .card {
         background-color: rgba(255, 255, 255, 0.8); /* Make the card slightly transparent */
     }
+
+    .register-link {
+        font-weight: bold;
+        text-decoration: none;
+        color: #007bff; /* Bootstrap primary color */
+    }
+
+    .register-link:hover {
+        text-decoration: underline; /* Underline on hover */
+    }
+
+    .register-icon {
+        margin-right: 5px; /* Space between icon and text */
+    }
 </style>
 
 <video autoplay muted loop class="video-background">
     <source src="{{ asset('videos/slsubc.mp4') }}" type="video/mp4">
-    Your browser does not support the video tag.
 </video>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <div class="content-wrapper">
     <div class="card border-primary">
         <div class="card-body text-center">
-            <img src="{{ asset('images/bitslog.png') }}" alt="Logo" style="width: 300px; height: auto;">
+            <img src="{{ asset('images/slsulogo.png') }}" alt="Logo" style="width: 300px; height: auto;">
         </div>
         <div class="card-body">
             <form action="{{ route('authenticate') }}" method="post">
@@ -54,26 +68,37 @@
                 <div class="mb-3 row">
                     <label for="email" class="col-md-4 col-form-label text-md-end text-start">Username:</label>
                     <div class="col-md-6">
-                        <input type="email" class="form-control input-sm @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}">
-                        @if ($errors->has('email'))
-                            <span class="text-danger">{{ $errors->first('email') }}</span>
-                        @endif
+                        <input type="email" class="form-control input-sm @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" aria-describedby="emailHelp">
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="password" class="col-md-4 col-form-label text-md-end text-start">Password:</label>
                     <div class="col-md-6">
-                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password">
-                        @if ($errors->has('password'))
-                            <span class="text-danger">{{ $errors->first('password') }}</span>
-                        @endif
+                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" aria-describedby="passwordHelp">
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <div class="mb-3 row">
+                    <div class="col-md-10 offset-md-2 d-flex justify-content-start align-items-center">
+                        <input type="checkbox" id="remember" name="remember" class="me-2">
+                        <label for="remember" class="me-4">Remember Me</label>
+                        <a href="{{ route('password.request') }}" class="text-primary">Forgot your password?</a>
+                    </div>
+                </div>
+                <div class="mb-3 row" >
                     <input type="submit" class="col-md-3 offset-md-5 btn bg-primary" value="Login">
                 </div>
-                <div class="my-2 d-flex justify-content-between align-items-center">
-                    <!-- Add any additional content here -->
+                  <div class="mb-3 row">
+                    <div class="col-md-12 text-center">
+                        <a href="{{ route('register') }}" class="register-link">
+                            <i class="fas fa-user-plus register-icon"></i> Register Here!
+                        </a>
+                    </div>
                 </div>
             </form>
         </div>

@@ -3,7 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\UserController; // Import UserController
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\EnvironmentDataController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\NewPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,16 +37,21 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function(){
 });
 
 Route::prefix('user-management')->group(function () {
-    Route::get('students', [UserController::class, 'viewStudents'])->name('students');
-    Route::get('faculty', [UserController::class, 'viewFaculty'])->name('faculty');
-    Route::get('staff', [UserController::class, 'viewStaff'])->name('staff');
-    Route::get('add-user', [UserController::class, 'addUser'])->name('add-user');
-    Route::get('edit-user/{id}', [UserController::class, 'editUser'])->name('edit-user');
-    Route::post('update-user/{id}', [UserController::class, 'updateUser'])->name('update-user');
-    Route::get('delete-user/{id}', [UserController::class, 'deleteUser'])->name('delete-user');
+    Route::get('report', [UserController::class, 'viewReport'])->name('report');
+    Route::get('environment/report', [EnvironmentDataController::class, 'index'])->name('environment.report');
+    Route::post('/environment/report', [EnvironmentDataController::class, 'store'])->name('environment.store');
 });
-
 use App\Http\Controllers\Auth\LoginController;
 
 Route::get('/auth/redirect/{provider}', [LoginController::class, 'redirectToProvider']);
 Route::get('/auth/callback/{provider}', [LoginController::class, 'handleProviderCallback']);
+
+// Password Reset Routes
+Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
+    ->name('password.request');
+Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+    ->name('password.email');
+Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
+    ->name('password.reset');
+Route::post('reset-password', [NewPasswordController::class, 'store'])
+    ->name('password.update');

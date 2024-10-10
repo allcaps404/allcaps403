@@ -10,8 +10,6 @@ class DashboardController extends Controller
 {
     public function login()
     {
-        
-
         return view('admin.dashboard.default');
     }
 }

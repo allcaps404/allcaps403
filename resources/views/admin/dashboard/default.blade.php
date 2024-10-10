@@ -6,7 +6,7 @@
         <div class="col-md-12 grid-margin">
             <div class="row">
                 <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                    <h3 class="font-weight-bold">Overview</h3>
+                    <h3 class="font-weight-bold">Overview Screen</h3>
                     <div class="card">
                         <!-- <div class="card-body">
                             <p>Welcome to your attendance monitoring dashboard.</p>
@@ -23,21 +23,15 @@
     <div class="col-md-4">
         <div class="card bg-primary text-white mb-4">
             <div class="card-body text-center">
-                <h4 class="card-title"><i class="fas fa-user-graduate"></i> Students</h4>
+                <h4 class="card-title"></h4>
                 <div class="row">
                     <div class="col-md-6">
-                        <p>Total Students</p>
-                        <h2>100</h2> <!-- Replace with dynamic data -->
                     </div>
                     <div class="col-md-6">
-                        <p>Present Students</p>
-                        <h2>80</h2> <!-- Replace with dynamic data -->
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <p>Absent Students</p>
-                        <h2>20</h2> <!-- Replace with dynamic data -->
                     </div>
                 </div>
             </div>
@@ -48,21 +42,15 @@
     <div class="col-md-4">
         <div class="card bg-primary text-white mb-4">
             <div class="card-body text-center">
-                <h4 class="card-title"><i class="fas fa-chalkboard-teacher"></i> Faculty</h4>
+                <h4 class="card-title"></h4>
                 <div class="row">
                     <div class="col-md-6">
-                        <p>Total Faculty</p>
-                        <h2>50</h2> <!-- Replace with dynamic data -->
                     </div>
                     <div class="col-md-6">
-                        <p>Present Faculty</p>
-                        <h2>40</h2> <!-- Replace with dynamic data -->
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <p>Absent Faculty</p>
-                        <h2>10</h2> <!-- Replace with dynamic data -->
                     </div>
                 </div>
             </div>
@@ -73,21 +61,15 @@
     <div class="col-md-4">
         <div class="card bg-primary text-white mb-4">
             <div class="card-body text-center">
-                <h4 class="card-title"><i class="fas fa-user-tie"></i> Staff</h4>
+                <h4 class="card-title"></h4>
                 <div class="row">
                     <div class="col-md-6">
-                        <p>Total Staff</p>
-                        <h2>30</h2> <!-- Replace with dynamic data -->
                     </div>
                     <div class="col-md-6">
-                        <p>Present Staff</p>
-                        <h2>25</h2> <!-- Replace with dynamic data -->
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <p>Absent Staff</p>
-                        <h2>5</h2> <!-- Replace with dynamic data -->
                     </div>
                 </div>
             </div>
@@ -97,7 +79,7 @@
 
       <div class="row mt-4">
         <!-- Attendance Logs Section -->
-        <div class="col-md-12">
+        <!-- <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -138,7 +120,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <!-- Additional Sections or Cards -->

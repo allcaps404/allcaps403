@@ -1,12 +1,67 @@
 @extends('layouts.admin.auth')
 
 @section('content')
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: lightblue;
+    }
+
+    .video-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+    }
+
+    .content-wrapper {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        width: 100%;
+        max-width: 500px;
+        padding: 20px;
+    }
+
+    .card {
+        background-color: rgba(255, 255, 255, 0.8); /* Make the card slightly transparent */
+    }
+</style>
 
 <div class="row justify-content-center mt-5">
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header bg-primary">Register Here!</div>
+            <div class="card-body text-center">
+                <img src="{{ asset('images/slsulogo.png') }}" alt="Logo" style="width: 300px; height: auto;">
+            </div>
             <div class="card-body">
+
+                {{-- Alert Messages --}}
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <form action="{{ route('store') }}" method="post">
                     @csrf
                     <div class="mb-3 row">
@@ -45,25 +100,6 @@
                     <div class="mb-3 row">
                         <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Register">
                     </div>
-
-                    <!-- Continue Sign in with Icons -->
-                    <p class="text-center">or</p>
-                    <p class="text-center"       style="color: blue;">Continue Sign in with:</p>
-                    <div class="row justify-content-center" style="margin-top: 20px;">
-                        <div class="col-md-12 text-center">
-                            <a href="{{ url('/auth/redirect/google') }}" class="btn btn-google btn-sm" style="display: inline-block; width: 50px; margin-right: 10px;">
-                                <img src="{{ asset('images/icon/google-icon.png') }}" alt="Google Icon" style="max-width: 30px;"> 
-                            </a>
-                            <a href="{{ url('/auth/redirect/facebook') }}" class="btn btn-facebook btn-sm" style="display: inline-block; width: 50px; margin-right: 10px;">
-                                <img src="{{ asset('images/icon/facebook-icon.png') }}" alt="Facebook Icon" style="max-width: 30px;">
-                            </a>
-                            <a href="{{ url('/auth/redirect/github') }}" class="btn btn-github btn-sm" style="display: inline-block; width: 50px; margin-right: 10px;">
-                                <img src="{{ asset('images/icon/github-icon.png') }}" alt="GitHub Icon" style="max-width: 30px;">
-                            </a>
-                        </div>
-                    </div>
-                    <!-- End of Continue Sign in with Icons -->
-
                 </form>
             </div>
         </div>
