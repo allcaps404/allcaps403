@@ -9,12 +9,8 @@ class EnvironmentData extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'temperature',
-        'humidity',
-        'soil_moisture',
-        'water_pump',
-        'fogger',
-    ];
+    protected $table = 'environment_data';
+
+    protected $fillable = ['temperature', 'humidity', 'soil_moisture'];
 }
 ?>

@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 
 namespace App\Http\Controllers\Auth;
 
@@ -25,4 +25,5 @@ class PasswordResetLinkController extends Controller
             : back()->withErrors(['email' => __($status)]);
     }
 }
-
+?>
+ -->

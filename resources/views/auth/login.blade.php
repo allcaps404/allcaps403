@@ -83,13 +83,6 @@
                         @enderror
                     </div>
                 </div>
-                <div class="mb-3 row">
-                    <div class="col-md-10 offset-md-2 d-flex justify-content-start align-items-center">
-                        <input type="checkbox" id="remember" name="remember" class="me-2">
-                        <label for="remember" class="me-4">Remember Me</label>
-                        <a href="{{ route('password.request') }}" class="text-primary">Forgot your password?</a>
-                    </div>
-                </div>
                 <div class="mb-3 row" >
                     <input type="submit" class="col-md-3 offset-md-5 btn bg-primary" value="Login">
                 </div>

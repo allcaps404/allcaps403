@@ -1,6 +1,5 @@
 @extends('layouts.admin.index')
-
-@section('title', 'Report')
+@section('title', 'Environment Report - Table View')
 
 @section('content')
     <div class="content-wrapper">
@@ -8,39 +7,60 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Report</h4>
+                        <h4 class="card-title">Environment Report</h4>
+
+                        <div class="nav-wrapper">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ request()->routeIs('environment.report') ? 'active' : '' }}" href="{{ route('environment.report', ['page' => $data->currentPage()]) }}">Table View</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ request()->routeIs('environment.chart') ? 'active' : '' }}" href="{{ route('environment.chart', ['page' => $data->currentPage()]) }}">Chart View</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
+
                     <div class="card-body">
-                        <!-- Add content related to student management -->
-                        <p>This section could include a table listing all relevant data for your report.</p>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Temperature</th>
-                                    <th>Humidity</th>
-                                    <th>Soil Moisture</th>
-                                    <th>Water Pump</th>
-                                    <th>Fogger</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>25°C</td>
-                                    <td>60%</td>
-                                    <td>30%</td>
-                                    <td><a href="#" class="btn btn-sm btn-success">On</a></td>
-                                    <td><a href="#" class="btn btn-sm btn-success">Active</a></td>
-                                    <td>
-                                        <a href="#" class="btn btn-sm btn-primary">Edit</a>
-                                        <a href="#" class="btn btn-sm btn-danger">Delete</a>
-                                    </td>
-                                </tr>
-                                <!-- More rows can be added dynamically or fetched from the database -->
-                            </tbody>
-                        </table>
+                        <!-- Download Buttons Positioned Appropriately -->
+                        <div class="mb-3">
+                            <a href="{{ route('environment.export.excel') }}" class="btn btn-primary">Download Current Page as Excel</a>
+                            <a href="{{ route('environment.export.csv') }}" class="btn btn-secondary">Download Current Page as CSV</a>
+                        </div>
+
+                        @if ($data->isEmpty())
+                            <p>No data available.</p>
+                        @else
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Temperature</th>
+                                        <th>Humidity</th>
+                                        <th>Soil Moisture</th>
+                                        <th>Date & Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $count =1;
+                                    @endphp
+                                    @foreach ($data as $entry)
+                                        <tr>
+                                            <td>{{ $count++; }}</td>
+                                            <td>{{ $entry->temperature }} °C</td>
+                                            <td>{{ $entry->humidity }}</td>
+                                            <td>{{ $entry->soil_moisture }}</td>
+                                            <td>{{ $entry->created_at->format('Y-m-d H:i') }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+
+                            <div class="pagination-wrapper">
+                                {{ $data->appends(request()->input())->links() }}
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

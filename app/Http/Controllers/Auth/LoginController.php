@@ -18,7 +18,6 @@ class LoginController extends Controller
     public function handleProviderCallback($provider)
     {
         $user = Socialite::driver($provider)->user();
-        // Do something with $user like create or log in user
     }
 
 }

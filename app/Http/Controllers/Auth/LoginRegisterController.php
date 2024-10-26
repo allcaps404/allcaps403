@@ -59,10 +59,8 @@ class LoginRegisterController extends Controller
                 'password' => Hash::make($request->password)
             ]);
 
-            $credentials = $request->only('email', 'password');
-            Auth::attempt($credentials);
-            $request->session()->regenerate();
-            return redirect()->route('dashboard')->withSuccess('You have successfully registered & logged in!');
+            // Redirect to the login page with a success message
+            return redirect()->route('login')->withSuccess('Registration successful! Please log in.');
         } catch (\Exception $e) {
             // If there's an error while storing user, redirect back with error message
             return redirect()->route('register')->withErrors([
@@ -120,7 +118,7 @@ class LoginRegisterController extends Controller
 
         return redirect()->route('login')->withErrors([
             'email' => 'Please login to access the dashboard.',
-        ])->withInput($request->only('email'));
+        ]);
     }
 
     /**
