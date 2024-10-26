@@ -6,23 +6,16 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Environment Report</h4>
-                        
-                        <!-- Navigation Bar -->
-                        <div class="nav-wrapper">
-                            <ul class="nav nav-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link {{ request()->routeIs('environment.report') ? 'active' : '' }}" href="{{ route('environment.report', ['page' => $data->currentPage()]) }}">Table View</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ request()->routeIs('environment.chart') ? 'active' : '' }}" href="{{ route('environment.chart', ['page' => $data->currentPage()]) }}">Chart View</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    
                     <div class="card-body">
+                        <!-- Aligned Navigation Bar with Buttons -->
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <!-- Left Aligned Table and Chart View Buttons -->
+                            <div>
+                                <a class="btn btn-primary me-5 {{ request()->routeIs('environment.report') ? 'active' : '' }}" href="{{ route('environment.report', ['page' => $data->currentPage()]) }}">Table View</a>
+                                <a class="btn btn-primary {{ request()->routeIs('environment.chart') ? 'active' : '' }}" href="{{ route('environment.chart', ['page' => $data->currentPage()]) }}">Chart View</a>
+                            </div>
+                        </div>
+
                         @if ($data->isEmpty())
                             <p>No data available to display in the chart.</p>
                         @else
@@ -104,3 +97,5 @@
         });
     </script>
 @endsection
+
+

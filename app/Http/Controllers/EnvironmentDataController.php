@@ -16,13 +16,13 @@ class EnvironmentDataController extends Controller
     public function index(Request $request)
     {
         $data = EnvironmentData::paginate($this->perPage);
-        return view('admin.users.reports', compact('data'));
+        return view('admin.logs.reports', compact('data'));
     }
 
     public function viewChart(Request $request)
     {
         $data = EnvironmentData::paginate($this->perPage);
-        return view('admin.users.chart', compact('data'));
+        return view('admin.logs.chart', compact('data'));
     }
 
    public function store(Request $request)
@@ -45,18 +45,8 @@ class EnvironmentDataController extends Controller
         return response()->json(['success' => true, 'data' => $environmentData], 201);
     }
 
-     public function exportExcel(Request $request)
-    {
-        // Get the current page data
-        $currentPageData = EnvironmentData::paginate(10)->getCollection();
-
-        return Excel::download(new EnvironmentDataExport($currentPageData), 'environment_data.xlsx');
-    }
-
-    // Method to handle the export as CSV
     public function exportCSV(Request $request)
     {
-        // Get the current page data
         $currentPageData = EnvironmentData::paginate(10)->getCollection();
 
         return Excel::download(new EnvironmentDataExport($currentPageData), 'environment_data.csv');

@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('user-management')->group(function () {
     Route::post('/log/store', [EnvironmentDataController::class, 'store'])->name('environment.store');
 });
+
