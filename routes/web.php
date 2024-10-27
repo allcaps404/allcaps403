@@ -5,6 +5,8 @@ use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\EnvironmentDataController;
+use App\Http\Controllers\ChatController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,6 +44,11 @@ Route::prefix('')->group(function () {
     Route::get('environment/chart', [EnvironmentDataController::class, 'viewChart'])->name('environment.chart');
     Route::post('environment/export/csv', [EnvironmentDataController::class, 'exportCSV'])->name('environment.export.csv');
 });
+
+    Route::post('/chat', [ChatController::class, 'chat']);
+    Route::get('/chat', function () {
+    return view('chat');
+})->name('chat');
 
 use App\Http\Controllers\Auth\LoginController;
 

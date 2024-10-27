@@ -50,8 +50,8 @@
                         <span class="menu-title">Logs</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
+                <li class="nav-item {{ request()->routeIs('chat') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('chat') }}">
                         <i class="bi bi-clipboard-data menu-icon"></i>
                         <span class="menu-title">Reports</span>
                     </a>
