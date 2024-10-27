@@ -5,8 +5,6 @@ use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\EnvironmentDataController;
-use App\Http\Controllers\ChatController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,13 +41,6 @@ Route::prefix('')->group(function () {
     Route::get('environment/log', [EnvironmentDataController::class, 'index'])->name('environment.log');
     Route::get('environment/chart', [EnvironmentDataController::class, 'viewChart'])->name('environment.chart');
     Route::post('environment/export/csv', [EnvironmentDataController::class, 'exportCSV'])->name('environment.export.csv');
-
-
-    // Route::get('/chats/respond', function () {
-    //     return view('chats.respond');
-    // })->name('chats.respond');
-
-    Route::get('/chats/respond', [ChatController::class, 'askToChatGpt'])->name('chats.respond');
 });
 
 use App\Http\Controllers\Auth\LoginController;

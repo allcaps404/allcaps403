@@ -11,7 +11,7 @@
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <!-- Left Aligned Table and Chart View Buttons -->
                             <div>
-                                <a class="btn btn-outline-primary me-2 {{ request()->routeIs('environment.report') ? 'active' : '' }}" href="{{ route('environment.report', ['page' => $data->currentPage()]) }}">
+                                <a class="btn btn-outline-primary me-2 {{ request()->routeIs('environment.log') ? 'active' : '' }}" href="{{ route('environment.log', ['page' => $data->currentPage()]) }}">
                                     Table View
                                 </a>
                                 <a class="btn btn-outline-primary {{ request()->routeIs('environment.chart') ? 'active' : '' }}" href="{{ route('environment.chart', ['page' => $data->currentPage()]) }}">
@@ -74,8 +74,8 @@
                         {
                             label: 'Soil Moisture',
                             data: soilMoistureData,
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
+                            backgroundColor: 'lightblue',
+                            borderColor: 'dodgerblue',
                             borderWidth: 1
                         }
                     ]

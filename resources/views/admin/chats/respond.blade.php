@@ -1,4 +1,4 @@
-@extends('layouts.app')
+<!-- @extends('layouts.app')
 
 @section('content')
 <div class="container">
@@ -18,3 +18,4 @@
     @endif
 </div>
 @endsection
+ -->
