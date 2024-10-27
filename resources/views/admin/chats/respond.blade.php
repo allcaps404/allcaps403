@@ -2,19 +2,19 @@
 
 @section('content')
 <div class="container">
-    <h1>ChatGPT Response</h1>
-    <form action="{{ route('chats.respond.post') }}" method="POST">
+    <h1>Ask ChatGPT</h1>
+    <form action="{{ route('chats.respond') }}" method="POST">
         @csrf
         <div class="form-group">
-            <label for="prompt">Enter your question:</label>
-            <input type="text" id="prompt" name="prompt" class="form-control" required>
+            <label for="message">Your question:</label>
+            <input type="text" id="message" name="message" class="form-control" required>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
     @if(isset($response))
-        <h2>Response:</h2>
-        <pre>{{ json_encode($response, JSON_PRETTY_PRINT) }}</pre>
+        <h2>Response from ChatGPT:</h2>
+        <div class="alert alert-info">{{ $response }}</div>
     @endif
 </div>
 @endsection

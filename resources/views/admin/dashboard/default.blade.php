@@ -1,41 +1,41 @@
 @extends('layouts.admin.index')
 
 @section('content')
-<div class="content-wrapper">
-    <div class="row">
-        <div class="col-md-12 grid-margin">
-            <div class="row">
-                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                    <h3 class="font-weight-bold">DASHBOARD</h3>
-                </div>            
-            </div>
-        </div>
+<div class="content-wrapper" style="background: linear-gradient(to bottom right, #e0ffe0, #f0f8e2); padding: 20px; border-radius: 8px;">
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h3 class="font-weight-bold">Agriculture Dashboard</h3>
+            <p>Welcome back, {{ $user->name }}</p>
+        </div>            
     </div>
 
     <div class="row">
-        <div class="col-md-4">
-            <div class="card bg-primary text-white">
+        <!-- Total Users Card -->
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm" style="background-color: #8BC34A; color: #fff;">
                 <div class="card-body text-center">
-                    <h4 class="card-title">Total Users</h4>
-                    <h2>{{ $userCount }}</h2> <!-- Display the user count here -->
+                    <h4 class="card-title"><i class="fas fa-users"></i> Total Users</h4>
+                    <h2 class="display-4">{{ $userCount }}</h2>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="card bg-primary text-white mb-4">
+        <!-- Seedling Health Card -->
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm" style="background-color: #FF9800; color: #fff;">
                 <div class="card-body text-center">
-                    <h4 class="card-title">Some Other Metric</h4>
-                    <h2>Value</h2>
+                    <h4 class="card-title"><i class="fas fa-seedling"></i> Seedling </h4>
+                    <h2 class="display-4"></h2>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="card bg-primary text-white mb-4">
+        <!-- Soil Moisture Card -->
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm" style="background-color: #2196F3; color: #fff;">
                 <div class="card-body text-center">
-                    <h4 class="card-title">Another Metric</h4>
-                    <h2>Value</h2>
+                    <h4 class="card-title"><i class="fas fa-fire"></i> Heat Index</h4>
+                    <h2 class="display-4"></h2>
                 </div>
             </div>
         </div>

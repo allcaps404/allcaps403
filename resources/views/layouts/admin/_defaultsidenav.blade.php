@@ -44,14 +44,14 @@
                         <span class="menu-title">Users</span>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->routeIs('report') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('report') }}">
+                <li class="nav-item {{ request()->routeIs('log') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('log') }}">
                         <i class="fas fa-file-alt menu-icon"></i>
                         <span class="menu-title">Logs</span>
                     </a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('respond') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('chats.respond.post') }}">
+                    <a class="nav-link" href="{{ route('chats.respond') }}">
                         <i class="bi bi-clipboard-data menu-icon"></i>
                         <span class="menu-title">Reports</span>
                     </a>

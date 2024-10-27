@@ -16,7 +16,7 @@ class EnvironmentDataController extends Controller
     public function index(Request $request)
     {
         $data = EnvironmentData::paginate($this->perPage);
-        return view('admin.logs.reports', compact('data'));
+        return view('admin.logs.log', compact('data'));
     }
 
     public function viewChart(Request $request)
@@ -45,11 +45,25 @@ class EnvironmentDataController extends Controller
         return response()->json(['success' => true, 'data' => $environmentData], 201);
     }
 
-    public function exportCSV(Request $request)
+       public function exportCSV(Request $request)
     {
-        $currentPageData = EnvironmentData::paginate(10)->getCollection();
+        // Validate the filename
+        $request->validate([
+            'filename' => 'required|string|max:255',
+        ]);
 
-        return Excel::download(new EnvironmentDataExport($currentPageData), 'environment_data.csv');
+        // Get the current page
+        $currentPage = $request->input('page', 1);
+        
+        // Fetch all data for export
+        $data = EnvironmentData::all(); // Fetch all data
+
+        // Filter data based on the current page
+        $currentPageData = $data->forPage($currentPage, $this->perPage); // Ensure this is correct
+
+        // Use the user-defined filename and append .csv
+        $filename = $request->input('filename') . '.csv';
+
+        return Excel::download(new EnvironmentDataExport($currentPageData), $filename);
     }
 }
-?>

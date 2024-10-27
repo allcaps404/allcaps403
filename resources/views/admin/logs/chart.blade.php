@@ -2,30 +2,36 @@
 @section('title', 'Environment Report - Chart View')
 
 @section('content')
-    <div class="content-wrapper">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
+    <div class="content-wrapper" style="padding: 20px 10px;">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="card shadow-sm" style="border-radius: 10px;">
                     <div class="card-body">
                         <!-- Aligned Navigation Bar with Buttons -->
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <!-- Left Aligned Table and Chart View Buttons -->
                             <div>
-                                <a class="btn btn-primary me-5 {{ request()->routeIs('environment.report') ? 'active' : '' }}" href="{{ route('environment.report', ['page' => $data->currentPage()]) }}">Table View</a>
-                                <a class="btn btn-primary {{ request()->routeIs('environment.chart') ? 'active' : '' }}" href="{{ route('environment.chart', ['page' => $data->currentPage()]) }}">Chart View</a>
+                                <a class="btn btn-outline-primary me-2 {{ request()->routeIs('environment.report') ? 'active' : '' }}" href="{{ route('environment.report', ['page' => $data->currentPage()]) }}">
+                                    Table View
+                                </a>
+                                <a class="btn btn-outline-primary {{ request()->routeIs('environment.chart') ? 'active' : '' }}" href="{{ route('environment.chart', ['page' => $data->currentPage()]) }}">
+                                    Chart View
+                                </a>
                             </div>
                         </div>
 
                         @if ($data->isEmpty())
                             <p>No data available to display in the chart.</p>
                         @else
-                            <!-- Bar Chart Canvas -->
-                            <canvas id="dataChart"></canvas>
+                            <!-- Bar Chart Canvas with responsive container -->
+                            <div class="chart-container" style="position: relative; height: 50vh; width: 100%;">
+                                <canvas id="dataChart"></canvas>
+                            </div>
                         @endif
                     </div>
 
                     <!-- Pagination for the chart with page synchronization -->
-                    <div class="pagination-wrapper">
+                    <div class="pagination-wrapper mt-4 d-flex justify-content-center">
                         {{ $data->appends(request()->input())->links() }}
                     </div>
                 </div>
@@ -61,35 +67,57 @@
                         {
                             label: 'Humidity (%)',
                             data: humidityData,
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
                             borderWidth: 1
                         },
                         {
                             label: 'Soil Moisture',
                             data: soilMoistureData,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
                             borderWidth: 1
                         }
                     ]
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    },
                     scales: {
                         x: {
-                            beginAtZero: true,
                             title: {
                                 display: true,
-                                text: 'Date & Time'
+                                text: 'Date & Time',
+                                color: '#333',
+                                font: {
+                                    weight: 'bold'
+                                }
+                            },
+                            ticks: {
+                                autoSkip: true,
+                                maxTicksLimit: 10,
+                                color: '#333'
                             }
                         },
                         y: {
-                            beginAtZero: true,
                             title: {
                                 display: true,
-                                text: 'Values'
-                            }
+                                text: 'Values',
+                                color: '#333',
+                                font: {
+                                    weight: 'bold'
+                                }
+                            },
+                            ticks: {
+                                color: '#333'
+                            },
+                            beginAtZero: true
                         }
                     }
                 }
@@ -97,5 +125,3 @@
         });
     </script>
 @endsection
-
-

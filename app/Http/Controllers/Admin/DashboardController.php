@@ -8,15 +8,16 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function login()
+    public function __construct()
     {
-        return view('admin.dashboard.default');
+        $this->middleware('auth');
     }
 
     public function index()
     {
+        $user = auth()->user();
         $userCount = User::count();
-        return view('admin.dashboard.default', compact('userCount'));
+       
+        return view('admin.dashboard.default', compact('user', 'userCount'));
     }
 }
-?>

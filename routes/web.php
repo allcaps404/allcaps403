@@ -36,17 +36,21 @@ Route::prefix('dashboard')->middleware(['auth'])->group(function() {
 });
 
 Route::prefix('')->group(function () {
-    Route::get('report', [UserController::class, 'viewReport'])->name('report');
+    Route::get('log', [UserController::class, 'viewReport'])->name('log');
     Route::resource('users', UserController::class)->middleware('auth');
 
     // Environment Data Routes
-    Route::get('environment/report', [EnvironmentDataController::class, 'index'])->name('environment.report');
+    Route::get('environment/log', [EnvironmentDataController::class, 'index'])->name('environment.log');
     Route::get('environment/chart', [EnvironmentDataController::class, 'viewChart'])->name('environment.chart');
-    Route::get('environment/export/csv', [EnvironmentDataController::class, 'exportCSV'])->name('environment.export.csv');
+    Route::post('environment/export/csv', [EnvironmentDataController::class, 'exportCSV'])->name('environment.export.csv');
 
-    Route::post('/respond', [ChatController::class, 'respond'])->name('chats.respond.post');
+
+    // Route::get('/chats/respond', function () {
+    //     return view('chats.respond');
+    // })->name('chats.respond');
+
+    Route::get('/chats/respond', [ChatController::class, 'askToChatGpt'])->name('chats.respond');
 });
-
 
 use App\Http\Controllers\Auth\LoginController;
 

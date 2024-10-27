@@ -2,27 +2,48 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\ChatGPTService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Client;
 
 class ChatController extends Controller
 {
-    protected $OpenAIService;
-
-    public function __construct(ChatGPTService $OpenAIService)
+    protected $httpClient;
+   
+    public function __construct()
     {
-        $this->OpenAIService = $OpenAIService;
+        $this->httpClient = new Client([
+            'base_uri' => 'https://api.openai.com/v1/',
+            'headers' => [
+                'Authorization' => 'Bearer ' . env('OPENAI_API_KEY'),
+                'Content-Type' => 'application/json',
+            ],
+        ]);
     }
 
-    public function respond(Request $request)
+   public function askToChatGpt(Request $request)
     {
-        $request->validate([
-            'prompt' => 'required|string|max:255',
-        ]);
+        $request->validate(['message' => 'required|string|max:255']);
 
-        $prompt = $request->input('prompt');
-        $response = $this->OpenAIService->chat($prompt);
+        $message = $request->input('message');
 
-        return view('respond', ['response' => $response]);
+        try {
+            $response = $this->httpClient->post('chat/completions', [
+                'json' => [
+                    'model' => 'gpt-3.5-turbo',
+                    'messages' => [
+                        ['role' => 'system', 'content' => 'You are a helpful assistant.'],
+                        ['role' => 'user', 'content' => $message],
+                    ],
+                ],
+            ]);
+
+            $chatGptResponse = json_decode($response->getBody(), true)['choices'][0]['message']['content'];
+            return view('chats.respond', ['response' => $chatGptResponse]);
+
+        } catch (\GuzzleHttp\Exception\RequestException $e) {
+            \Log::error('Request Error: ' . $e->getMessage());
+            return view('chats.respond', ['response' => 'Error communicating with ChatGPT.']);
+        }
     }
 }
