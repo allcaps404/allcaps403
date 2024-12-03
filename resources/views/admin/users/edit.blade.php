@@ -2,31 +2,41 @@
 
 @section('content')
 <div class="content-wrapper">
-    <div class="row">
-        <div class="col-md-12 grid-margin">
-            <h3 class="font-weight-bold">Edit User</h3>
-            <form action="{{ route('users.update', $user) }}" method="POST">
-                @csrf
-                @method('PUT')
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" name="name" class="form-control" value="{{ $user->name }}" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" class="form-control" value="{{ $user->email }}" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password (Leave blank to keep current password)</label>
-                    <input type="password" name="password" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="password_confirmation">Confirm Password</label>
-                    <input type="password" name="password_confirmation" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-primary">Update User</button>
-            </form>
+    <h3>Edit User</h3>
+
+    <form action="{{ route('users.update', $user->id) }}" method="POST">
+        @csrf
+        @method('PUT')
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $user->name) }}" required>
         </div>
-    </div>
+        
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $user->email) }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="editRole" class="form-label">Role</label>
+            <select class="form-select form-control" id="editRole" name="role" required>
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Password (Leave blank to keep current password)</label>
+            <input type="password" class="form-control" id="password" name="password">
+        </div>
+
+        <div class="mb-3">
+            <label for="password_confirmation" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
 </div>
 @endsection

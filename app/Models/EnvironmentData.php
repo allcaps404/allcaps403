@@ -11,6 +11,8 @@ class EnvironmentData extends Model
 
     protected $table = 'environment_data';
 
-    protected $fillable = ['temperature', 'humidity', 'soil_moisture'];
+    protected $fillable = ['temperature', 'humidity', 'avg_soil_moisture', 'soil_moisture_1', 
+        'soil_moisture_2', 
+        'soil_moisture_3'];
 }
 ?>

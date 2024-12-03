@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $title }}</title>
     <link href="{{ asset('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-    <link rel="shortcut icon" href="{{asset('images/logo.png')}}" />
+    <link rel="shortcut icon" href="{{asset('images/mylogo.png')}}" />
 </head>
 <body>
 
@@ -21,9 +21,6 @@
                 @guest
                     <li class="nav-item">
                         <a class="nav-link {{ (request()->is('login')) ? 'active' : '' }}" href="{{ route('login') }}"></a>
-                    </li> 
-                   <li class="nav-item">
-                        <a class="nav-link {{ (request()->is('register')) ? 'active' : '' }}" href="{{ route('register') }}"></a>
                     </li> 
                 @else    
                     <li class="nav-item dropdown">

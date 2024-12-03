@@ -7,9 +7,7 @@
             <div class="col-lg-12">
                 <div class="card shadow-sm" style="border-radius: 10px;">
                     <div class="card-body">
-                        <!-- Aligned Navigation Bar with Buttons -->
                         <div class="d-flex justify-content-between align-items-center mb-4">
-                            <!-- Left Aligned Table and Chart View Buttons -->
                             <div>
                                 <a class="btn btn-outline-primary me-2 {{ request()->routeIs('environment.log') ? 'active' : '' }}" href="{{ route('environment.log', ['page' => $data->currentPage()]) }}">
                                     Table View
@@ -17,6 +15,12 @@
                                 <a class="btn btn-outline-primary {{ request()->routeIs('environment.chart') ? 'active' : '' }}" href="{{ route('environment.chart', ['page' => $data->currentPage()]) }}">
                                     Chart View
                                 </a>
+                            </div>
+                            <div>
+                                <!-- Download Chart Button -->
+                                <button class="btn btn-success btn-md" data-bs-toggle="modal" data-bs-target="#renameModal">
+                                    <i class="fas fa-download"></i> Download Chart
+                                </button>
                             </div>
                         </div>
 
@@ -30,7 +34,6 @@
                         @endif
                     </div>
 
-                    <!-- Pagination for the chart with page synchronization -->
                     <div class="pagination-wrapper mt-4 d-flex justify-content-center">
                         {{ $data->appends(request()->input())->links() }}
                     </div>
@@ -39,44 +42,65 @@
         </div>
     </div>
 
-    <!-- Include Chart.js -->
+    <!-- Rename Modal for File Download -->
+    <div class="modal fade" id="renameModal" tabindex="-1" aria-labelledby="renameModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="renameModalLabel">Rename File Before Download</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="fileName" class="form-label">Enter File Name</label>
+                    <input type="text" id="fileName" class="form-control" placeholder="Enter file name" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="downloadChartBtn">Download</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Prepare the data for the chart
         const dataLabels = {!! json_encode($data->pluck('created_at')->map(fn($date) => $date->format('Y-m-d H:i'))) !!};
         const temperatureData = {!! json_encode($data->pluck('temperature')) !!};
         const humidityData = {!! json_encode($data->pluck('humidity')) !!};
-        const soilMoistureData = {!! json_encode($data->pluck('soil_moisture')) !!};
+        const avgSoilMoistureData = {!! json_encode($data->pluck('avg_soil_moisture')) !!};
 
-        // Initialize the chart after the page has fully loaded
         document.addEventListener('DOMContentLoaded', function () {
             const ctx = document.getElementById('dataChart').getContext('2d');
 
-            new Chart(ctx, {
-                type: 'bar',
+            const chart = new Chart(ctx, {
+                type: 'line',
                 data: {
                     labels: dataLabels,
                     datasets: [
                         {
                             label: 'Temperature (°C)',
                             data: temperatureData,
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            borderColor: 'rgba(255, 99, 132, 1)',
-                            borderWidth: 1
+                            fill: false,
+                            borderColor: 'red',
+                            tension: 0.1,
+                            borderWidth: 2
                         },
                         {
                             label: 'Humidity (%)',
                             data: humidityData,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
+                            fill: false,
+                            borderColor: 'cyan',
+                            tension: 0.1,
+                            borderWidth: 2
                         },
                         {
-                            label: 'Soil Moisture',
-                            data: soilMoistureData,
-                            backgroundColor: 'lightblue',
-                            borderColor: 'dodgerblue',
-                            borderWidth: 1
+                            label: 'Average Soil Moisture',
+                            data: avgSoilMoistureData,
+                            fill: false,
+                            borderColor: 'darkblue',
+                            tension: 0.1,
+                            borderWidth: 2
                         }
                     ]
                 },
@@ -121,6 +145,36 @@
                         }
                     }
                 }
+            });
+
+            const downloadChartBtn = document.getElementById('downloadChartBtn');
+            const fileNameInput = document.getElementById('fileName');
+
+            downloadChartBtn.addEventListener('click', function () {
+                const fileName = fileNameInput.value || 'chart'; 
+                const canvas = document.getElementById('dataChart');
+                const context = canvas.getContext('2d');
+
+                const tempCanvas = document.createElement('canvas');
+                const tempContext = tempCanvas.getContext('2d');
+                
+                tempCanvas.width = canvas.width;
+                tempCanvas.height = canvas.height;
+
+                tempContext.fillStyle = 'white';
+                tempContext.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+
+                tempContext.drawImage(canvas, 0, 0);
+
+                const dataURL = tempCanvas.toDataURL('image/png');
+
+                const link = document.createElement('a');
+                link.href = dataURL;
+                link.download = fileName + '.png';
+                link.click();
+
+                const renameModal = new bootstrap.Modal(document.getElementById('renameModal'));
+                renameModal.hide();
             });
         });
     </script>

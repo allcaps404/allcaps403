@@ -1,4 +1,4 @@
-@extends('layouts.admin.auth')
+<!-- @extends('layouts.admin.auth')
 
 @section('content')
 <style>
@@ -107,3 +107,4 @@
 </div>
 
 @endsection
+ -->

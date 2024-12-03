@@ -1,11 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title')</title>
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-    <script>
+<title>@yield('title')</title>
+<nav class="sidebar sidebar-offcanvas active" id="sidebar">
+    <ul class="nav">
+        <li class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                <i class="icon-grid menu-icon"></i>
+                <span class="menu-title">Dashboard</span>
+            </a>
+        </li>
+
+        @if(Auth::user() && Auth::user()->role === 'admin')
+        <li class="nav-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('users.index') }}">
+                <i class="fas fa-users menu-icon"></i>
+                <span class="menu-title">Users</span>
+            </a>
+        </li>
+        @endif
+
+        <li class="nav-item {{ request()->routeIs('log') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('log') }}">
+                <i class="fas fa-file-alt menu-icon"></i>
+                <span class="menu-title">Logs</span>
+            </a>
+        </li>
+
+        <!-- <li class="nav-item {{ request()->routeIs('setting.index') ? 'active' : '' }}">
+            <a class="nav-link collapsed" href="settings.index">
+                <i class="fa fa-wrench menu-icon"></i>
+                <span class="menu-title">Settings</span>
+            </a>
+        </li>                 -->
+    </ul>   
+    <script src="{{ asset('js/app.js') }}">
         document.addEventListener("DOMContentLoaded", function() {
             const navLinks = document.querySelectorAll('.nav-link');
             const activeLink = sessionStorage.getItem('activeLink');
@@ -27,67 +53,4 @@
             });
         });
     </script>
-</head>
-<body>
-    <div class="container-scroller">
-        <nav class="sidebar sidebar-offcanvas active" id="sidebar">
-            <ul class="nav">
-                <li class="nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('admin.dashboard') }}">
-                        <i class="icon-grid menu-icon"></i>
-                        <span class="menu-title">Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('users.index') }}">
-                        <i class="fas fa-users menu-icon"></i>
-                        <span class="menu-title">Users</span>
-                    </a>
-                </li>
-                <li class="nav-item {{ request()->routeIs('log') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('log') }}">
-                        <i class="fas fa-file-alt menu-icon"></i>
-                        <span class="menu-title">Logs</span>
-                    </a>
-                </li>
-                <li class="nav-item {{ request()->routeIs('chat') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('chat') }}">
-                        <i class="bi bi-clipboard-data menu-icon"></i>
-                        <span class="menu-title">Reports</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" data-toggle="collapse" href="#settings" aria-expanded="false" aria-controls="settings">
-                        <i class="icon-layout menu-icon"></i>
-                        <span class="menu-title">Settings</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="settings">
-                        <ul class="nav flex-column sub-menu" style="list-style-type: none;">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="fas fa-tint menu-icon"></i>
-                                    <span class="menu-title">Water Pump</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="fas fa-spray-can menu-icon"></i>
-                                    <span class="menu-title">Fogger</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </nav>
-
-        <div class="main-panel">
-            <div class="content-wrapper">
-                <!-- Your main content goes here -->
-            </div>
-        </div>
-    </div>
-    <script src="{{ asset('js/app.js') }}"></script>
-</body>
-</html>
+</nav>

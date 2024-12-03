@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EnvironmentDataController;
+use App\Http\Controllers\RelayNotificationController;
+// use App\Http\Controllers\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +20,13 @@ use App\Http\Controllers\EnvironmentDataController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::prefix('user-management')->group(function () {
+Route::prefix('logs')->group(function () {
     Route::post('/log/store', [EnvironmentDataController::class, 'store'])->name('environment.store');
+    Route::get('/latest-environment-data', [EnvironmentDataController::class, 'getLatestData']);
+
 });
+// Route::get('/settings/{setting_id}', [SettingController::class, 'controlDevice'])->name('settings.control');
+
+Route::post('/notifications/relay', [RelayNotificationController::class, 'store']);
+
 

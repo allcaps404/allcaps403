@@ -31,16 +31,31 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="renameModalLabel">Rename File</h5>
+                                            <h5 class="modal-title" id="renameModalLabel">Download Records</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <form action="{{ route('environment.export.csv') }}" method="POST">
+                                        <form action="{{ route('environment.export.excel') }}" method="POST">
                                             @csrf
-                                            <input type="hidden" name="page" value="{{ $data->currentPage() }}"> <!-- Current page -->
                                             <div class="modal-body">
                                                 <div class="mb-3">
-                                                    <label for="filename" class="form-label">New Filename (without extension)</label>
+                                                    <label for="filename" class="form-label">Filename (without extension)</label>
                                                     <input type="text" class="form-control" id="filename" name="filename" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="pages" class="form-label">Select Pages</label>
+                                                    <input 
+                                                        type="text" 
+                                                        class="form-control" 
+                                                        id="pages" 
+                                                        name="pages" 
+                                                        placeholder="E.g., 1,2,3" 
+                                                        pattern="^\d+(,\d+)*$" 
+                                                        required 
+                                                    >
+                                                    <small class="text-muted">Enter page numbers separated by commas (e.g., 1,2,3).</small>
+                                                    <div class="invalid-feedback">
+                                                        Please enter a valid page list (e.g., 1,2,3).
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -52,7 +67,6 @@
                                 </div>
                             </div>
 
-                            <!-- Responsive Table Wrapper -->
                             <div class="table-responsive">
                                 <table class="table table-hover">
                                     <thead class="table-light">
@@ -68,7 +82,7 @@
                                             <tr>
                                                 <td>{{ number_format($entry->temperature, 2) }} °C</td>
                                                 <td>{{ number_format($entry->humidity, 2) }} %</td>
-                                                <td>{{ number_format($entry->soil_moisture, 2) }} %</td>
+                                                <td>{{ number_format($entry->avg_soil_moisture, 2) }} %</td>
                                                 <td>{{ $entry->created_at->format('Y-m-d H:i') }}</td>
                                             </tr>
                                         @endforeach
@@ -86,6 +100,21 @@
         </div>
     </div>
 
-    <!-- Include Bootstrap JS for modal functionality -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('#renameModal form');
+            const modal = new bootstrap.Modal(document.getElementById('renameModal'));
+
+            form.addEventListener('submit', (event) => {
+                if (form.checkValidity()) {
+                    modal.hide();
+                }
+            });
+
+            form.addEventListener('input', () => {
+                form.classList.add('was-validated');
+            });
+        });
+    </script>
 @endsection

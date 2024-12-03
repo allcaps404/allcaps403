@@ -9,5 +9,10 @@
         "axios": "^1.1.2",
         "laravel-vite-plugin": "^0.8.0",
         "vite": "^4.0.0"
+    },
+    "dependencies": {
+        "chartjs-node-canvas": "^4.1.6",
+        "laravel-echo": "^1.17.0",
+        "pusher-js": "^8.4.0-rc2"
     }
 }

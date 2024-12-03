@@ -3,23 +3,13 @@
 @section('content')
 
 <style>
-     body, html {
+    body, html {
         margin: 0;
         padding: 0;
         width: 100%;
         height: 100%;
         overflow: hidden;
         background-color: lightblue;
-    }
-
-    .video-background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: -1;
     }
 
     .content-wrapper {
@@ -34,33 +24,84 @@
     }
 
     .card {
-        background-color: rgba(255, 255, 255, 0.8); /* Make the card slightly transparent */
+        background-color: rgba(255, 255, 255, 0.8); 
     }
 
-    .register-link {
-        font-weight: bold;
-        text-decoration: none;
-        color: #007bff; /* Bootstrap primary color */
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
-    .register-link:hover {
-        text-decoration: underline; /* Underline on hover */
+    .logo-container img {
+        width: 90px;
+        height: auto;
+        margin-right: 15px;
     }
 
-    .register-icon {
-        margin-right: 5px; /* Space between icon and text */
+    .logo-text {
+        font-size: 45px; 
+        font-weight: 700; 
+        color: #2C3E50;
+        letter-spacing: 2px;
+        font-family: 'Poppins', sans-serif;
+        text-transform: uppercase;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+        background: linear-gradient(135deg, #6dd5ed, #2193b0);
+        -webkit-background-clip: text;
+        color: transparent;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+
+    @media (max-width: 768px) {
+        .content-wrapper {
+            width: 90%;
+            max-width: 100%;
+            padding: 10px;
+            transform: translate(-50%, -40%); 
+        }
+
+        .logo-container img {
+            width: 70px;
+            margin-right: 10px;
+        }
+
+        .logo-text {
+            font-size: 30px;
+        }
+
+        .mb-3.row label {
+            text-align: left; 
+        }
+
+        .col-md-4, .col-md-6 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .btn {
+            width: 50%;
+            max-width: 150px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .card-body {
+            padding: 10px;
+        }
     }
 </style>
 
-<video autoplay muted loop class="video-background">
-    <source src="{{ asset('videos/slsubc.mp4') }}" type="video/mp4">
-</video>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <div class="content-wrapper">
     <div class="card border-primary">
         <div class="card-body text-center">
-            <img src="{{ asset('images/slsulogo.png') }}" alt="Logo" style="width: 300px; height: auto;">
+            <div class="logo-container">
+                <img src="{{ asset('images/mylogo.png') }}" alt="Logo">
+                <span class="logo-text">SeedLoom</span>
+            </div>
         </div>
         <div class="card-body">
             <form action="{{ route('authenticate') }}" method="post">
@@ -83,15 +124,8 @@
                         @enderror
                     </div>
                 </div>
-                <div class="mb-3 row" >
+                <div class="mb-3 row">
                     <input type="submit" class="col-md-3 offset-md-5 btn bg-primary" value="Login">
-                </div>
-                  <div class="mb-3 row">
-                    <div class="col-md-12 text-center">
-                        <a href="{{ route('register') }}" class="register-link">
-                            <i class="fas fa-user-plus register-icon"></i> Register Here!
-                        </a>
-                    </div>
                 </div>
             </form>
         </div>
