@@ -1,7 +1,6 @@
 @extends('layouts.admin.index')
 
 @section('content')
-<!-- Include SweetAlert2 library -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <div class="content-wrapper" style="background: linear-gradient(to bottom right, #e0ffe0, #f0f8e2); padding: 20px; border-radius: 8px;">

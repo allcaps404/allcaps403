@@ -1,7 +1,6 @@
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
-        /* Notification Bell Icon and Badge */
         .notification-dropdown {
             position: relative;
         }
@@ -22,7 +21,7 @@
             top: 5px;
             right: 5px;
             background-color: white;
-            color: white;
+            color: red;
             font-size: 14px;
             font-weight: bold;
             width: 22px;
