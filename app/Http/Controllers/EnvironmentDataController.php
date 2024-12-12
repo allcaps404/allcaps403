@@ -54,7 +54,7 @@ class EnvironmentDataController extends Controller
 
         if ($saveData->save()) {
             // \Log::info('Data saved: ', $saveData->toArray());
-            echo "Success";
+            // echo "Success";
             // return response()->json(['success' => true, 'data' => $environmentData], 201);
         }
     }
