@@ -53,7 +53,7 @@ class EnvironmentDataController extends Controller
         $saveData->soil_moisture_3 = $request->soil_moisture_3;
 
         if ($saveData->save()) {
-            \Log::info('Data saved: ', $saveData->toArray());
+            // \Log::info('Data saved: ', $saveData->toArray());
             echo "Success";
             // return response()->json(['success' => true, 'data' => $environmentData], 201);
         }
