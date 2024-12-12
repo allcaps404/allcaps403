@@ -84,32 +84,28 @@
         </div>
     </div>
 </div>
-@endsection
-
-@push('script')
 <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
-    <script type="text/javascript">
+<script type="text/javascript">
     $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
-});
-    
-function fetchTemperature() {
-    $.ajax({
-        method: "GET",
-        url: `{{ route('dashboard.getDashboardData') }}`,
-        success: function(response) {
-            console.log(response);
-            $('#displayTemperature').text(response.temperature + "°C");
-            $('#displayHumidity').text(response.humidity + "°%");
-            $('#displaySoilMoisture').text(response.avg_soil_moisture + "%");
-            $('#displaySoilMoisture1').text(response.soil_moisture_1 + "%");
-            $('#displaySoilMoisture2').text(response.soil_moisture_2 + "%");
-            $('#displaySoilMoisture3').text(response.soil_moisture_3 + "%");
-        }
     });
-}
-setInterval(fetchTemperature, 1000);
+    function fetchTemperature() {
+        $.ajax({
+            method: "GET",
+            url: `{{ route('dashboard.getDashboardData') }}`,
+            success: function(response) {
+                console.log(response);
+                $('#displayTemperature').text(response.temperature + "°C");
+                $('#displayHumidity').text(response.humidity + "°%");
+                $('#displaySoilMoisture').text(response.avg_soil_moisture + "%");
+                $('#displaySoilMoisture1').text(response.soil_moisture_1 + "%");
+                $('#displaySoilMoisture2').text(response.soil_moisture_2 + "%");
+                $('#displaySoilMoisture3').text(response.soil_moisture_3 + "%");
+            }
+        });
+    }
+    setInterval(fetchTemperature, 1000);
 </script>
-@endpush
+@endsection
