@@ -27,8 +27,9 @@ class EnvironmentDataController extends Controller
         return view('admin.logs.chart', compact('data'));
     }
 
-   public function store(Request $request)
+    public function store(Request $request)
     {
+        return $request->all();
 
         $currentDate = Carbon::now();
         
