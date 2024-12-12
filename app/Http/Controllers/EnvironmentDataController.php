@@ -29,6 +29,7 @@ class EnvironmentDataController extends Controller
 
    public function store(Request $request)
     {
+
         $currentDate = Carbon::now();
         
         EnvironmentData::whereDate('created_at', '<', $currentDate->toDateString())->delete();
@@ -44,22 +45,20 @@ class EnvironmentDataController extends Controller
         }
 
         \Log::debug('Incoming request data: ', $request->all());
+        $saveData = new EnvironmentData;
+        $saveData->temperature = $request->temperature;
+        $saveData->humidity = $request->humidity;
+        $saveData->avg_soil_moisture = $request->avg_soil_moisture;
+        $saveData->soil_moisture_1 = $request->soil_moisture_1;
+        $saveData->soil_moisture_2 = $request->soil_moisture_2;
+        $saveData->soil_moisture_3 = $request->soil_moisture_3;
 
-        $validated = $request->validate([
-            'temperature' => 'required|numeric',
-            'humidity' => 'required|numeric',
-            'avg_soil_moisture' => 'required|numeric',
-            'soil_moisture_1' => 'required|numeric',
-            'soil_moisture_2' => 'required|numeric',
-            'soil_moisture_3' => 'required|numeric',
-        ]);
-
-        $environmentData = EnvironmentData::create($validated);
-        \Log::info('Data saved: ', $environmentData->toArray());
-
-        return response()->json(['success' => true, 'data' => $environmentData], 201);
+        if ($saveData->save()) {
+            \Log::info('Data saved: ', $saveData->toArray());
+            dd($request);
+            return response()->json(['success' => true, 'data' => $environmentData], 201);
         }
-
+    }
 
     public function checkArduinoResponse()
     {

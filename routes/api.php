@@ -22,6 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::prefix('logs')->group(function () {
     Route::post('/log/store', [EnvironmentDataController::class, 'store'])->name('environment.store');
+    // Route::get('/log/store/{temperature}/{humidity}/{soil_moisture_1}/{soil_moisture_2}/{soil_moisture_3}/{avg_soil_moisture}', [EnvironmentDataController::class, 'store'])->name('environment.store');
     Route::get('/latest-environment-data', [EnvironmentDataController::class, 'getLatestData']);
 
 });
