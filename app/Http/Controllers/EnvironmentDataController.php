@@ -29,8 +29,6 @@ class EnvironmentDataController extends Controller
 
     public function store(Request $request)
     {
-        return $request->temperature;
-
         $currentDate = Carbon::now();
         
         EnvironmentData::whereDate('created_at', '<', $currentDate->toDateString())->delete();
