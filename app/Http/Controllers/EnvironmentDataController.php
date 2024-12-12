@@ -34,15 +34,15 @@ class EnvironmentDataController extends Controller
         
         EnvironmentData::whereDate('created_at', '<', $currentDate->toDateString())->delete();
 
-        $currentTimestamp = now();
-        $lastEntry = EnvironmentData::latest('created_at')->first();
+        // $currentTimestamp = now();
+        // $lastEntry = EnvironmentData::latest('created_at')->first();
     
-        if ($lastEntry && $currentTimestamp->diffInMinutes($lastEntry->created_at) < 1) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Data can only be saved every 1 minutes.',
-            ], 429);
-        }
+        // if ($lastEntry && $currentTimestamp->diffInMinutes($lastEntry->created_at) < 1) {
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => 'Data can only be saved every 1 minutes.',
+        //     ], 429);
+        // }
 
         \Log::debug('Incoming request data: ', $request->all());
         $saveData = new EnvironmentData;
