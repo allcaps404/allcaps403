@@ -31,7 +31,6 @@ class EnvironmentDataController extends Controller
     {
         $currentDate = Carbon::now();
         
-        EnvironmentData::whereDate('created_at', '<', $currentDate->toDateString())->delete();
 
         // $currentTimestamp = now();
         // $lastEntry = EnvironmentData::latest('created_at')->first();
@@ -56,6 +55,9 @@ class EnvironmentDataController extends Controller
             // \Log::info('Data saved: ', $saveData->toArray());
             // echo "Success";
             // return response()->json(['success' => true, 'data' => $environmentData], 201);
+
+        EnvironmentData::whereDate('created_at', '<', $currentDate->toDateString())->delete();
+
         }
     }
 
