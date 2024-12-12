@@ -11,7 +11,6 @@ class CreateEnvironmentDataTable extends Migration
             $table->id();
             $table->float('temperature');
             $table->float('humidity');
-            $table->float('soil_moisture');
             $table->timestamps();
         });
     }

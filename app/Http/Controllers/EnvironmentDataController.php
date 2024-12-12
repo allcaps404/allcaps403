@@ -27,10 +27,12 @@ class EnvironmentDataController extends Controller
         return view('admin.logs.chart', compact('data'));
     }
 
-    public function store(Request $request)
+   public function store(Request $request)
     {
+
         $currentDate = Carbon::now();
         
+        EnvironmentData::whereDate('created_at', '<', $currentDate->toDateString())->delete();
 
         // $currentTimestamp = now();
         // $lastEntry = EnvironmentData::latest('created_at')->first();
@@ -52,12 +54,8 @@ class EnvironmentDataController extends Controller
         $saveData->soil_moisture_3 = $request->soil_moisture_3;
 
         if ($saveData->save()) {
-            // \Log::info('Data saved: ', $saveData->toArray());
-            // echo "Success";
-            // return response()->json(['success' => true, 'data' => $environmentData], 201);
-
-        EnvironmentData::whereDate('created_at', '<', $currentDate->toDateString())->delete();
-
+            \Log::info('Data saved: ', $saveData->toArray());
+            return response()->json(['success' => true, 'data' => $environmentData], 201);
         }
     }
 
