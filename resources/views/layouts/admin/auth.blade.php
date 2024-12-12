@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $title }}</title>
     <link href="{{ asset('bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-    <link rel="shortcut icon" href="{{asset('images/mylogo.png')}}" />
+    <link rel="shortcut icon" href="{{asset('images/    .png')}}" />
 </head>
 <body>
 

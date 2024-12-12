@@ -33,7 +33,6 @@ Route::controller(LoginController::class)->group(function () {
 // Dashboard route (accessible to authenticated users)
 Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
-    Route::get('/get/getDashboardData', [DashboardController::class, 'getDashboardData'])->name('dashboard.getDashboardData');
     Route::get('/dashboard-data', [DashboardController::class, 'getDashboardData'])->name('dashboard.getDashboardData');
 });
 

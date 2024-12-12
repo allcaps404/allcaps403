@@ -5,6 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Admin</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="{{asset('mytemplate/vendors/feather/feather.css')}}">
@@ -134,7 +135,7 @@
   <script src="{{asset('mytemplate/js/dashboard.js')}}"></script>
   <script src="{{asset('mytemplate/js/Chart.roundedBarCharts.js')}}"></script>
   <!-- End custom js for this page-->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js .js"></script>
   <!-- SweetAlert2 JS -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
@@ -198,7 +199,7 @@
 
                 isArduinoOffline = true;
             });
-    }, 130000);
+    }, 90000);
   </script>
 </body>
 

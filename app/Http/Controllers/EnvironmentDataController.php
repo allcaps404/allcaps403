@@ -36,10 +36,10 @@ class EnvironmentDataController extends Controller
         $currentTimestamp = now();
         $lastEntry = EnvironmentData::latest('created_at')->first();
     
-        if ($lastEntry && $currentTimestamp->diffInMinutes($lastEntry->created_at) < 2) {
+        if ($lastEntry && $currentTimestamp->diffInMinutes($lastEntry->created_at) < 1) {
             return response()->json([
                 'success' => false,
-                'message' => 'Data can only be saved every 2 minutes.',
+                'message' => 'Data can only be saved every 1 minutes.',
             ], 429);
         }
 
@@ -65,10 +65,10 @@ class EnvironmentDataController extends Controller
     {
         $lastRecord = EnvironmentData::latest('created_at')->first();
 
-        if (!$lastRecord || $lastRecord->created_at->diffInSeconds(now()) > 5) {
+        if (!$lastRecord || $lastRecord->created_at->diffInSeconds(now()) > 2) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'No response from Arduino for more than 5 seconds.'
+                'message' => 'No response from Arduino for more than 2 seconds.'
             ], 500);
         }
 

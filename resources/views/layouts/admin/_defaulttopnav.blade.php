@@ -8,9 +8,9 @@
       <span class="icon-menu"></span>
     </button>
     <marquee behavior="scroll" direction="left" class="mx-3">Real-Time IoT Monitoring and Automation of Irrigation and Fogger System for Vegetable Seedlings</marquee>
-    <ul class="navbar-nav navbar-nav-right">
+    <ul class="navbar-nav navbar-nav-right ">
       @include('components.notifications')
-      
+
       <li class="nav-item nav-profile dropdown">
         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
           <img src="{{ asset('images/mylogo.png') }}" alt="profile" class="nav-profile-img"/>

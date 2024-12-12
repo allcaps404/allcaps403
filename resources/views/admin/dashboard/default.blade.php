@@ -1,8 +1,10 @@
 @extends('layouts.admin.index')
 
-@section('content')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@section('styles')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOMT3z1b6SxXW/s6I0qVn5cR/Hgx3nEPhLIFvka" crossorigin="anonymous">
+@endsection
 
+@section('content')
 <div class="content-wrapper" style="background: linear-gradient(to bottom right, #e0ffe0, #f0f8e2); padding: 20px; border-radius: 8px;">
     <div class="row mb-4">
         <div class="col-12 text-center">
@@ -81,10 +83,18 @@
             </div>
         </div>
     </div>
-
 </div>
+@endsection
 
-<script type="text/javascript">
+@push('script')
+<script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
+    <script type="text/javascript">
+    $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+    
 function fetchTemperature() {
     $.ajax({
         method: "GET",
@@ -102,4 +112,4 @@ function fetchTemperature() {
 }
 setInterval(fetchTemperature, 1000);
 </script>
-@endsection
+@endpush
