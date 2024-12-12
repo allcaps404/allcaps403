@@ -31,7 +31,7 @@
             </a>
         </li>                 -->
     </ul>   
-    <script src="{{ asset('js/app.js') }}">
+    <script>
         document.addEventListener("DOMContentLoaded", function() {
             const navLinks = document.querySelectorAll('.nav-link');
             const activeLink = sessionStorage.getItem('activeLink');
