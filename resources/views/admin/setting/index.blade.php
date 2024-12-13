@@ -29,6 +29,7 @@
                         <tr>
                             <th>Device</th>
                             <th>Status</th>
+                            <th>Automatic</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -36,15 +37,25 @@
                         @if(isset($settings))
                             @foreach($settings as $setting)
                             <tr>
-                                <td>{{$setting->device}}</td>
+                                <td>{{ $setting->device }}</td>
                                 <td>
                                     <span class="badge bg-{{ $setting->status ? 'success' : 'danger' }}">
                                         {{ $setting->status ? 'On' : 'Off' }}
                                     </span>
                                 </td>
                                 <td>
-                                    <button data-id="{{$setting->id}}" data-status="{{ $setting->status }}" class="status_update btn btn-outline-{{ $setting->status?'danger' : 'success' }} btn-sm">
-                                        {{ $setting->status? 'Turn Off' : 'Turn On' }}
+                                    <span class="badge bg-{{ $setting->automatic ? 'info' : 'secondary' }}">
+                                        {{ $setting->automatic ? 'Enabled' : 'Disabled' }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <button data-id="{{ $setting->id }}" data-status="{{ $setting->status }}" 
+                                        class="status_update btn btn-outline-{{ $setting->status ? 'danger' : 'success' }} btn-sm">
+                                        {{ $setting->status ? 'Turn Off' : 'Turn On' }}
+                                    </button>
+                                    <button data-id="{{ $setting->id }}" data-automatic="{{ $setting->automatic }}"
+                                        class="automatic_toggle btn btn-outline-{{ $setting->automatic ? 'secondary' : 'info' }} btn-sm">
+                                        {{ $setting->automatic ? 'Disable Auto' : 'Enable Auto' }}
                                     </button>
                                 </td>
                             </tr>
@@ -58,16 +69,33 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script type="text/javascript">
-    $('.status_update').on('click', function(e){
+    // Update device status
+    $('.status_update').on('click', function(e) {
         e.preventDefault();
         
-        var id = $(this).attr('data-id'); 
-        var currentStatus = $(this).attr('data-status'); 
-        var newStatus = currentStatus == 1 ? 0 : 1; 
-
+        var id = $(this).data('id');
+        
         $.ajax({
             method: 'GET',
             url: '/settings/update/' + id, 
+            success: function(response) {
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                alert('An error occurred in Laravel: ' + error);
+            }
+        });
+    });
+
+    // Toggle automatic mode
+    $('.automatic_toggle').on('click', function(e) {
+        e.preventDefault();
+        
+        var id = $(this).data('id');
+        
+        $.ajax({
+            method: 'GET',
+            url: '/settings/toggle-automatic/' + id,
             success: function(response) {
                 location.reload();
             },

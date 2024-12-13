@@ -60,4 +60,18 @@ class SettingController extends Controller
         }
         return Redirect::back()->with('message','Successful !');
     }
+
+    public function toggleAutomatic(Request $request, $id)
+    {
+        $setting = Setting::find($id);
+
+        if ($setting) {
+            $setting->automatic = !$setting->automatic; // Toggle automatic status
+            $setting->save();
+
+            return response()->json(['message' => 'Automatic mode updated successfully!', 'automatic' => $setting->automatic], 200);
+        }
+
+        return response()->json(['message' => 'Setting not found!'], 404);
+    }
 }
