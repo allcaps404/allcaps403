@@ -24,12 +24,12 @@
             </a>
         </li>
 
-        <!-- <li class="nav-item {{ request()->routeIs('setting.index') ? 'active' : '' }}">
-            <a class="nav-link collapsed" href="settings.index">
+        <li class="nav-item {{ request()->routeIs('admin.setting.index') ? 'active' : '' }}">
+            <a class="nav-link collapsed" href="{{ route('settings.index') }}">
                 <i class="fa fa-wrench menu-icon"></i>
                 <span class="menu-title">Settings</span>
             </a>
-        </li>                 -->
+        </li>                
     </ul>   
     <script>
         document.addEventListener("DOMContentLoaded", function() {

@@ -20,7 +20,7 @@ class RelayNotificationController extends Controller
             'relay' => 'required|string',
             'temperature' => 'required|numeric',
             'humidity' => 'required|numeric',
-            'soil_moisture' => 'required|numeric',
+            'avg_soil_moisture' => 'required|numeric',
         ]);
 
         $recipients = User::whereIn('role', ['admin', 'user'])->get();

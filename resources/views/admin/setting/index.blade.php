@@ -1,4 +1,4 @@
-<!-- @extends('layouts.admin.index')
+@extends('layouts.admin.index')
 
 @section('content')
 <div class="content-wrapper">
@@ -77,4 +77,4 @@
         });
     });
 </script>
-@endsection -->
+@endsection

@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EnvironmentDataController;
 use App\Http\Controllers\RelayNotificationController;
-// use App\Http\Controllers\SettingController;
+use App\Http\Controllers\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ Route::prefix('logs')->group(function () {
     Route::get('/latest-environment-data', [EnvironmentDataController::class, 'getLatestData']);
 
 });
-// Route::get('/settings/{setting_id}', [SettingController::class, 'controlDevice'])->name('settings.control');
+Route::get('/settings/{setting_id}', [SettingController::class, 'controlDevice'])->name('settings.control');
 
 Route::post('/notifications/relay', [RelayNotificationController::class, 'store']);
 

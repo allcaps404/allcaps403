@@ -55,11 +55,11 @@ Route::prefix('environment')->middleware('auth')->group(function () {
 });
 
 //Settings routes (accessible to authenticated users)
-// Route::middleware('auth')->group(function () {
-//     Route::get('/settings/update/{id}', [SettingController::class, 'updatePumpStatus'])->name('settings.update.pump');
-//     Route::get('/settings', [SettingController::class, 'showSettings'])->name('settings.index');
-//     Route::post('/settings/control', [SettingController::class, 'controlDevice'])->name('settings.control');
-// });
+Route::middleware('auth')->group(function () {
+    Route::get('/settings/update/{id}', [SettingController::class, 'updatePumpStatus'])->name('settings.update.pump');
+    Route::get('/settings', [SettingController::class, 'showSettings'])->name('settings.index');
+    Route::post('/settings/control', [SettingController::class, 'controlDevice'])->name('settings.control');
+});
 
 Route::post('/notifications/{notificationId}/read', [RelayNotificationController::class, 'markAsRead']);
 Route::delete('/notifications/{notificationId}/delete', [RelayNotificationController::class, 'deleteNotification']);
