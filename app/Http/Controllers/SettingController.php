@@ -22,6 +22,7 @@ class SettingController extends Controller
             'device' => $setting->device,
             'status' => $status,
             'temperature' => $temperature,
+            'humidity' => $humidity,
             'soilmoisture' => $soilmoisture,
             'automatic' => $automatic
         ]);
@@ -66,7 +67,7 @@ class SettingController extends Controller
         $setting = Setting::find($id);
 
         if ($setting) {
-            $setting->automatic = !$setting->automatic; // Toggle automatic status
+            $setting->automatic = !$setting->automatic;
             $setting->save();
 
             return response()->json(['message' => 'Automatic mode updated successfully!', 'automatic' => $setting->automatic], 200);

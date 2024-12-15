@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Setting extends Model
 {
     protected $table = 'settings';
-    protected $fillable = ['device', 'status'];
+    protected $fillable = ['device', 'status', 'automatic', 'humidity',  'temperature', 'soilmoisture']; 
 }

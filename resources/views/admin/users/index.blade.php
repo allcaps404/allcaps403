@@ -181,7 +181,7 @@
 
 @endsection
 
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     // Set up modal with the user details when the delete button is clicked
     var deleteModal = document.getElementById('deleteModal');
