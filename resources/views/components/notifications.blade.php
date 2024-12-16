@@ -21,7 +21,7 @@
             top: 5px;
             right: 5px;
             background-color: white;
-            color: red;
+            color: black;
             font-size: 14px;
             font-weight: bold;
             width: 22px;
@@ -166,6 +166,9 @@
                             <div class="message-container">
                                 <span>{{ $notification->data['message'] }}</span>
                                 <small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                                <small class="text-muted">
+                                    {{ $notification->created_at->format('Y-m-d H:i:s') }}
+                                </small>
                             </div>
                             <button class="delete-btn btn btn-danger btn-sm" style="display: none; margin-left: auto;">Remove</button>
                         </li>
