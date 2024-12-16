@@ -15,6 +15,7 @@ class SettingController extends Controller
 
         $status = $setting->status;
         $temperature = $setting->temperature;
+        $humidity = $setting->humidity;
         $soilmoisture = $setting->soilmoisture;
         $automatic = $setting->automatic;
 
