@@ -63,7 +63,7 @@ class EnvironmentDataController extends Controller
     {
         $lastRecord = EnvironmentData::latest('created_at')->first();
 
-        if (!$lastRecord || $lastRecord->created_at->diffInSeconds(now()) > 2) {
+        if (!$lastRecord || $lastRecord->created_at->diffInSeconds(now()) > 1) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'No response from Arduino for more than 2 seconds.'
@@ -75,41 +75,42 @@ class EnvironmentDataController extends Controller
             'message' => 'Arduino is responding.'
         ]);
     }
+
     public function exportExcel(Request $request)
-{
-    $request->validate([
-        'filename' => 'required|string|max:255',
-        'pages' => 'required|string',
-    ]);
+    {
+        $request->validate([
+            'filename' => 'required|string|max:255',
+            'pages' => 'required|string',
+        ]);
 
-    $pagesInput = explode(',', $request->input('pages'));
-    $pages = array_filter($pagesInput, function ($page) {
-        return is_numeric($page) && $page > 0;
-    });
+        $pagesInput = explode(',', $request->input('pages'));
+        $pages = array_filter($pagesInput, function ($page) {
+            return is_numeric($page) && $page > 0;
+        });
 
-    if (empty($pages)) {
-        return back()->with('error', 'Please enter valid page numbers.');
+        if (empty($pages)) {
+            return back()->with('error', 'Please enter valid page numbers.');
+        }
+
+        $data = collect();
+        foreach ($pages as $page) {
+            $offset = ($page - 1) * $this->perPage;
+            $pageData = EnvironmentData::skip($offset)
+                ->take($this->perPage)
+                ->get(['temperature', 'humidity', 'avg_soil_moisture', 'created_at']);
+            $data = $data->merge($pageData);
+        }
+
+        if ($data->isEmpty()) {
+            return back()->with('error', 'No data available for the selected pages.');
+        }
+
+        $filename = $request->input('filename') . '.xlsx';
+
+        session()->flash('filename', $filename);
+        
+        return Excel::download(new EnvironmentDataExport($data), $filename);
     }
-
-    $data = collect();
-    foreach ($pages as $page) {
-        $offset = ($page - 1) * $this->perPage;
-        $pageData = EnvironmentData::skip($offset)
-            ->take($this->perPage)
-            ->get(['temperature', 'humidity', 'avg_soil_moisture', 'created_at']);
-        $data = $data->merge($pageData);
-    }
-
-    if ($data->isEmpty()) {
-        return back()->with('error', 'No data available for the selected pages.');
-    }
-
-    $filename = $request->input('filename') . '.xlsx';
-
-    session()->flash('filename', $filename);
-    
-    return Excel::download(new EnvironmentDataExport($data), $filename);
-}
       
         
     public function exportChart(Request $request)

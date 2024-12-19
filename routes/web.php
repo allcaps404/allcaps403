@@ -54,7 +54,6 @@ Route::prefix('environment')->middleware('auth')->group(function () {
 
 });
 
-//Settings routes (accessible to authenticated users)
 Route::middleware('auth')->group(function () {
     Route::get('/settings/update/{id}', [SettingController::class, 'updatePumpStatus'])->name('settings.update.pump');
     Route::get('/settings/toggle-automatic/{id}', [SettingController::class, 'toggleAutomatic'])->name('settings.toggle.automatic');

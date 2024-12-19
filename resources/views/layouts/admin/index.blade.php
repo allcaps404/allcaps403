@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -29,69 +28,41 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
 
-<style>
-  .card-title i {
-    color: white;
-    margin-right: 8px;
-  }
-
-  <!-- <style>
-    /* Custom style for SweetAlert2 popup to make it responsive */
-    .swal-popup {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+ <style>
+    /* Styles for the bottom warning bar */
+    #arduino-warning {
+      display: none; /* Hidden by default */
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #c0392b; /* A red-like color */
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      font-weight: bold;
+      z-index: 9999;
+      font-family: sans-serif;
+    }
+    #arduino-warning i {
+      margin-right: 5px;
     }
 
-    .swal-title {
-        font-size: 24px; /* Adjust title size */
+    /* You can also add a subtle animation, for instance: */
+    @keyframes slideUp {
+      from {
+        transform: translateY(100%);
+      }
+      to {
+        transform: translateY(0);
+      }
     }
 
-    .swal-content {
-        font-size: 16px; /* Adjust content (message) size */
+    #arduino-warning.show {
+      display: block;
+      animation: slideUp 0.3s ease-out;
     }
-
-    /* Ensure image scales properly in smaller viewports */
-    .swal-popup img {
-        width: 200px !important;  /* Adjust this value to make the image larger */
-        height: 200px !important; /* Adjust this value to make the image larger */
-        object-fit: contain; /* Maintain aspect ratio */
-    }
-
-    /* Responsive styling */
-    @media (max-width: 600px) {
-        .swal-popup {
-            width: 80% !important;
-        }
-        .swal-title {
-            font-size: 20px;
-        }
-        .swal-content {
-            font-size: 14px;
-        }
-        .swal-popup img {
-            width: 80%;
-            max-width: 100px;
-        }
-    }
-
-    @media (max-width: 400px) {
-        .swal-popup {
-            width: 95% !important;
-        }
-        .swal-title {
-            font-size: 18px;
-        }
-        .swal-content {
-            font-size: 12px;
-        }
-        .swal-popup img {
-            width: 90%;
-            max-width: 80px;
-        }
-    }
-</style>
+  </style>
 
 <body>
   <div class="container-scroller">
@@ -118,6 +89,10 @@
   </div>
   <!-- container-scroller -->
 
+  <div id="arduino-warning">
+    <i class="fas fa-exclamation-triangle"></i> Arduino is offline!
+  </div>
+
   <!-- plugins:js -->
   <script src="{{asset('mytemplate/vendors/js/vendor.bundle.base.js')}}"></script>
   <!-- endinject -->
@@ -140,67 +115,42 @@
   <!-- SweetAlert2 JS -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
-  <script type="text/javascript">
-    let isAlertShown = false;
-    let isArduinoOffline = false;
+  <script>
+        let isAlertShown = false;
+        let isArduinoOffline = false;
 
-    setInterval(() => {
-        fetch('{{ route('check.arduino.response') }}')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Arduino not responding');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Arduino Status:', data.message); 
+        setInterval(() => {
+            fetch('{{ route('check.arduino.response') }}')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Arduino not responding');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Arduino Status:', data.message);
 
-                if (isArduinoOffline) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Yay! The Arduino is Back!',
-                        text: 'Your Arduino is back online, no more worries!',
-                        imageUrl: '{{ asset("images/tikarol.png") }}', 
-                        imageWidth: 50,
-                        imageHeight: 50,
-                        imageAlt: 'Tikarol',
-                        confirmButtonText: 'Okay!',
-                        customClass: {
-                            popup: 'swal-popup animated bounceInUp',  
-                            title: 'swal-title',
-                            content: 'swal-content'
-                        }
-                    });
-                    isArduinoOffline = false; 
-                    isAlertShown = false;
-                }
-            })
-            .catch(error => {
-                if (!isAlertShown) {  
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Uh-oh! The Arduino is Offline!',
-                        text: 'Your Arduino is not responding! Please check it out!',
-                        imageUrl: '{{ asset("images/tikarol.png") }}', 
-                        imageWidth: 50,
-                        imageHeight: 50,
-                        imageAlt: 'Tikarol',
-                        confirmButtonText: 'Got it!',
-                        customClass: {
-                            popup: 'swal-popup animated shake',  
-                            title: 'swal-title',
-                            content: 'swal-content'
-                        }
-                    }).then(() => {
+                    // If we previously thought it was offline, now it's back online
+                    if (isArduinoOffline) {
+                        // Hide the warning bar
+                        document.getElementById('arduino-warning').classList.remove('show');
+                        isArduinoOffline = false;
                         isAlertShown = false;
-                    });
-                    isAlertShown = true;  
-                }
+                    }
+                })
+                .catch(error => {
+                    console.log('Error:', error);
 
-                isArduinoOffline = true;
-            });
-    }, 90000);
-  </script>
+                    // If not shown yet, show the bottom warning
+                    if (!isAlertShown) {
+                        const warningBar = document.getElementById('arduino-warning');
+                        warningBar.classList.add('show');
+                        isAlertShown = true;
+                    }
+
+                    isArduinoOffline = true;
+                });
+        }, 10000);
+      </script>
 </body>
-
 </html>

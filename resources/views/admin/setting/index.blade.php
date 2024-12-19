@@ -87,7 +87,6 @@
         });
     });
 
-    // Toggle automatic mode
     $('.automatic_toggle').on('click', function(e) {
         e.preventDefault();
         
