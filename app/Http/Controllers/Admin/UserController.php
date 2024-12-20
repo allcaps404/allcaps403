@@ -76,7 +76,7 @@ class UserController extends Controller
     // View reports
     public function viewReport()
     {
-        $data = EnvironmentData::paginate(10);
+        $data = EnvironmentData::paginate(30);
         return view('admin.logs.log', compact('data'));
     }
 }

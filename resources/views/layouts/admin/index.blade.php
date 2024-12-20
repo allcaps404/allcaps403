@@ -90,7 +90,7 @@
   <!-- container-scroller -->
 
   <div id="arduino-warning">
-    <i class="fas fa-exclamation-triangle"></i> Arduino is offline!
+    <i class="fas fa-exclamation-triangle"></i> Arduino is Not Responding!
   </div>
 
   <!-- plugins:js -->
@@ -130,9 +130,7 @@
                 .then(data => {
                     console.log('Arduino Status:', data.message);
 
-                    // If we previously thought it was offline, now it's back online
                     if (isArduinoOffline) {
-                        // Hide the warning bar
                         document.getElementById('arduino-warning').classList.remove('show');
                         isArduinoOffline = false;
                         isAlertShown = false;
@@ -141,7 +139,6 @@
                 .catch(error => {
                     console.log('Error:', error);
 
-                    // If not shown yet, show the bottom warning
                     if (!isAlertShown) {
                         const warningBar = document.getElementById('arduino-warning');
                         warningBar.classList.add('show');

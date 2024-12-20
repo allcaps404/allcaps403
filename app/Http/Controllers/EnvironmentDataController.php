@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 
 class EnvironmentDataController extends Controller
 {
-    private $perPage = 10;
+    private $perPage = 30;
 
     public function index(Request $request)
     {
