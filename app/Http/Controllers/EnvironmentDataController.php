@@ -63,10 +63,10 @@ class EnvironmentDataController extends Controller
     {
         $lastRecord = EnvironmentData::latest('created_at')->first();
 
-        if (!$lastRecord || $lastRecord->created_at->diffInSeconds(now()) > 1) {
+        if (!$lastRecord || $lastRecord->created_at->diffInSeconds(now()) > 20) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'No response from Arduino for more than 2 seconds.'
+                'message' => 'No response from Arduino for more than 20 seconds.'
             ], 500);
         }
 
