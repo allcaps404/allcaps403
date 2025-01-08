@@ -152,7 +152,14 @@
         @endif
     </a>
     <div class="dropdown-menu notification-menu dropdown-menu-right navbar-dropdown" aria-labelledby="notificationDropdown">
-        <p class="dropdown-header">Notifications</p>
+        <div class="d-flex justify-content-between align-items-center">
+            <p class="dropdown-header mb-0">Notifications</p>
+            <!-- "Remove All" Button placed next to the label -->
+            @if(Auth::user()->unreadNotifications->count() > 0)
+                <button id="remove-all-btn" class="btn btn-danger btn-sm">Remove All</button>
+            @endif
+        </div>
+        
         <div id="notifications">
             @if(Auth::user()->unreadNotifications->isEmpty())
                 <p class="no-notifications">No new notifications</p>
@@ -178,6 +185,7 @@
         </div>
     </div>
 </li>
+
 <script>
     document.querySelectorAll('.notification-item').forEach(item => {
         item.addEventListener('mouseenter', () => {
@@ -224,6 +232,30 @@
             .catch(error => {
                 console.error('Error:', error);
             });
+        });
+    });
+
+    document.getElementById('remove-all-btn').addEventListener('click', function () {
+        fetch('/notifications/delete-all', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('notification-list').innerHTML = '';
+                const countElement = document.querySelector('.count');
+                if (countElement) {
+                    countElement.style.display = 'none';
+                }
+                document.getElementById('notifications').innerHTML = '<p class="no-notifications">No new notifications</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
     });
 </script>

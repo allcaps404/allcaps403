@@ -87,25 +87,81 @@
 <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
 <script type="text/javascript">
     $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     });
+
     function fetchTemperature() {
         $.ajax({
             method: "GET",
             url: `{{ route('dashboard.getDashboardData') }}`,
             success: function(response) {
                 console.log(response);
+                
                 $('#displayTemperature').text(response.temperature + "°C");
                 $('#displayHumidity').text(response.humidity + "°%");
                 $('#displaySoilMoisture').text(response.avg_soil_moisture + "%");
                 $('#displaySoilMoisture1').text(response.soil_moisture_1 + "%");
                 $('#displaySoilMoisture2').text(response.soil_moisture_2 + "%");
                 $('#displaySoilMoisture3').text(response.soil_moisture_3 + "%");
+
+                updateTemperatureCard(response.temperature);
+                updateHumidityCard(response.humidity);
+                updateSoilMoistureCard('#displaySoilMoisture1', response.soil_moisture_1);
+                updateSoilMoistureCard('#displaySoilMoisture2', response.soil_moisture_2);
+                updateSoilMoistureCard('#displaySoilMoisture3', response.soil_moisture_3);
+
+                updateAverageSoilMoistureCard(response.avg_soil_moisture);
             }
         });
     }
+
+    function updateTemperatureCard(temperature) {
+        var card = $('#displayTemperature').closest('.card');
+        if (temperature > 35) {
+            card.css('background-color', '#FF5722');
+        } else if (temperature > 25) {
+            card.css('background-color', '#FF9800');
+        } else {
+            card.css('background-color', '#4CAF50');
+        }
+    }
+
+    function updateHumidityCard(humidity) {
+        var card = $('#displayHumidity').closest('.card');
+        if (humidity > 80) {
+            card.css('background-color', '#03A9F4');
+        } else if (humidity > 50) {
+            card.css('background-color', '#FFEB3B');
+        } else {
+            card.css('background-color', '#FF9800');
+        }
+    }
+
+    function updateSoilMoistureCard(elementId, moistureValue) {
+        var card = $(elementId).closest('.card');
+        if (moistureValue < 40) {
+            card.css('background-color', '#F44336');
+        } else if (moistureValue < 50) {
+            card.css('background-color', '#FF9800');
+        } else {
+            card.css('background-color', '#4CAF50');
+        }
+    }
+
+    function updateAverageSoilMoistureCard(avgMoisture) {
+        var card = $('#displaySoilMoisture').closest('.card');
+        if (avgMoisture < 40) {
+            card.css('background-color', '#F44336');
+        } else if (avgMoisture < 50) {
+            card.css('background-color', '#FF9800');
+        } else {
+            card.css('background-color', '#4CAF50');
+        }
+    }
+
     setInterval(fetchTemperature, 1000);
 </script>
+
 @endsection

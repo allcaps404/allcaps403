@@ -70,4 +70,16 @@ class RelayNotificationController extends Controller
 
         return response()->json(['message' => 'Notification deleted'], 200);
     }
+
+    public function deleteAll(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($user) {
+            $user->unreadNotifications()->delete();
+            return response()->json(['success' => true, 'message' => 'All notifications deleted']);
+        }
+
+        return response()->json(['success' => false, 'message' => 'User not authenticated'], 401);
+    }
 }

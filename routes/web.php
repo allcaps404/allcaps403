@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
 
 Route::post('/notifications/{notificationId}/read', [RelayNotificationController::class, 'markAsRead']);
 Route::delete('/notifications/{notificationId}/delete', [RelayNotificationController::class, 'deleteNotification']);
+Route::delete('/notifications/delete-all', [RelayNotificationController::class, 'deleteAll'])->name('notifications.deleteAll');
 
 // OAuth routes
 Route::get('/auth/redirect/{provider}', [LoginController::class, 'redirectToProvider']);
