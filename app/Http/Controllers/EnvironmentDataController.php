@@ -59,23 +59,6 @@ class EnvironmentDataController extends Controller
         }
     }
 
-    public function checkArduinoResponse()
-    {
-        $lastRecord = EnvironmentData::latest('created_at')->first();
-
-        if (!$lastRecord || $lastRecord->created_at->diffInSeconds(now()) > 20) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'No response from Arduino for more than 20 seconds.'
-            ], 500);
-        }
-
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Arduino is responding.'
-        ]);
-    }
-
     public function exportExcel(Request $request)
     {
         $request->validate([

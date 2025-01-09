@@ -27,43 +27,6 @@
   <!-- SweetAlert2 CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
-
- <style>
-    /* Styles for the bottom warning bar */
-    #arduino-warning {
-      display: none; /* Hidden by default */
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background-color: #c0392b; /* A red-like color */
-      color: #fff;
-      text-align: center;
-      padding: 10px;
-      font-weight: bold;
-      z-index: 9999;
-      font-family: sans-serif;
-    }
-    #arduino-warning i {
-      margin-right: 5px;
-    }
-
-    /* You can also add a subtle animation, for instance: */
-    @keyframes slideUp {
-      from {
-        transform: translateY(100%);
-      }
-      to {
-        transform: translateY(0);
-      }
-    }
-
-    #arduino-warning.show {
-      display: block;
-      animation: slideUp 0.3s ease-out;
-    }
-  </style>
-
 <body>
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
@@ -88,11 +51,7 @@
     <!-- page-body-wrapper ends -->
   </div>
   <!-- container-scroller -->
-
-  <div id="arduino-warning">
-    <i class="fas fa-exclamation-triangle"></i> Arduino is Not Responding!
-  </div>
-
+  
   <!-- plugins:js -->
   <script src="{{asset('mytemplate/vendors/js/vendor.bundle.base.js')}}"></script>
   <!-- endinject -->
@@ -114,40 +73,5 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js .js"></script>
   <!-- SweetAlert2 JS -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-
-  <script>
-        let isAlertShown = false;
-        let isArduinoOffline = false;
-
-        setInterval(() => {
-            fetch('{{ route('check.arduino.response') }}')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Arduino not responding');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Arduino Status:', data.message);
-
-                    if (isArduinoOffline) {
-                        document.getElementById('arduino-warning').classList.remove('show');
-                        isArduinoOffline = false;
-                        isAlertShown = false;
-                    }
-                })
-                .catch(error => {
-                    console.log('Error:', error);
-
-                    if (!isAlertShown) {
-                        const warningBar = document.getElementById('arduino-warning');
-                        warningBar.classList.add('show');
-                        isAlertShown = true;
-                    }
-
-                    isArduinoOffline = true;
-                });
-        }, 10000);
-      </script>
 </body>
 </html>

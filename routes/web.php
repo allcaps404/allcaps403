@@ -50,9 +50,7 @@ Route::prefix('environment')->middleware('auth')->group(function () {
     Route::get('chart', [EnvironmentDataController::class, 'viewChart'])->name('environment.chart');
     Route::post('export/excel', [EnvironmentDataController::class, 'exportEXCEL'])->name('environment.export.excel');
     Route::get('export/chart', [EnvironmentDataController::class, 'exportChart'])->name('environment.export.chart');
-    Route::get('/check-arduino-response', [EnvironmentDataController::class, 'checkArduinoResponse'])->name('check.arduino.response');
-
-});
+});    
 
 Route::middleware('auth')->group(function () {
     Route::get('/settings/update/{id}', [SettingController::class, 'updatePumpStatus'])->name('settings.update.pump');
