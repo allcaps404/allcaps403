@@ -31,13 +31,6 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function register()
-    // {
-    //     return view('auth.register', [
-    //         'title' => "Registration",
-    //         'pagename' => "Registration Form",
-    //     ]);
-    // }
 
     /**
      * Store a new user.
@@ -62,10 +55,8 @@ class LoginController extends Controller
                 'password' => Hash::make($request->password)
             ]);
 
-            // Redirect to the login page with a success message
              return redirect()->route('users.index')->with('success', 'User created successfully.');
         } catch (\Exception $e) {
-            // If there's an error while storing user, redirect back with error message
             return redirect()->route('register')->withErrors([
                 'email' => 'Registration failed. Please try again.',
             ])->withInput($request->only('name', 'email'));

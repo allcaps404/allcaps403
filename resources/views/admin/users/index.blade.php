@@ -86,14 +86,27 @@
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="email" name="email" required>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3 position-relative">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" name="password" required>
+                            <span class="input-group-text" onclick="togglePassword('password', 'togglePasswordIcon1')" style="cursor: pointer;">
+                                <i id="togglePasswordIcon1" class="bi bi-eye"></i>
+                            </span>
+                        </div>
                     </div>
-                    <div class="mb-3">
+
+                    <div class="mb-3 position-relative">
                         <label for="password_confirmation" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                            <span class="input-group-text" onclick="togglePassword('password_confirmation', 'togglePasswordIcon2')" style="cursor: pointer;">
+                                <i id="togglePasswordIcon2" class="bi bi-eye"></i>
+                            </span>
+                        </div>
                     </div>
+
+
                     <div class="mb-3">
                         <label for="editRole" class="form-label">Role</label>
                         <select class="form-select form-control" id="editRole" name="role" required>
@@ -125,25 +138,37 @@
                     @method('PUT')
                     <div class="mb-3">
                         <label for="editName" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="editName" name="name" required>
+                        <input type="text" class="form-control" id="editName" name="name" value="{{ old('name', $user->name) }}" required>
                     </div>
                     <div class="mb-3">
                         <label for="editEmail" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="editEmail" name="email" required>
+                        <input type="email" class="form-control" id="editEmail" name="email" value="{{ old('email', $user->email) }}" required>
                     </div>
                     <div class="mb-3">
                         <label for="editPassword" class="form-label">Password (Leave blank to keep current password)</label>
-                        <input type="password" class="form-control" id="editPassword" name="password">
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="editPassword" name="password">
+                            <span class="input-group-text" onclick="togglePassword('editPassword', 'togglePasswordIcon3')" style="cursor: pointer;">
+                                <i id="togglePasswordIcon3" class="bi bi-eye"></i>
+                            </span>
+                        </div>
                     </div>
+
                     <div class="mb-3">
                         <label for="editPasswordConfirmation" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control" id="editPasswordConfirmation" name="password_confirmation">
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="editPasswordConfirmation" name="password_confirmation">
+                            <span class="input-group-text" onclick="togglePassword('editPasswordConfirmation', 'togglePasswordIcon4')" style="cursor: pointer;">
+                                <i id="togglePasswordIcon4" class="bi bi-eye"></i>
+                            </span>
+                        </div>
                     </div>
+
                     <div class="mb-3">
                         <label for="editRole" class="form-label">Role</label>
                         <select class="form-select form-control" id="editRole" name="role" required>
-                            <option value="admin">Admin</option>
-                            <option value="user">User</option>
+                            <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
+                            <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>User</option>
                         </select>
                     </div>
                     <div class="modal-footer">
@@ -155,6 +180,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Delete User Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -183,7 +209,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Set up modal with the user details when the delete button is clicked
     var deleteModal = document.getElementById('deleteModal');
     deleteModal.addEventListener('show.bs.modal', function (event) {
         var button = event.relatedTarget;
@@ -191,7 +216,6 @@
         var userName = button.getAttribute('data-user-name');
         var formAction = '/users/' + userId;
 
-        // Update modal content with the user details
         var modalUserName = deleteModal.querySelector('#userName');
         modalUserName.textContent = userName;
 
@@ -199,7 +223,6 @@
         deleteForm.action = formAction;
     });
 
-    // Handle the Edit User modal
     var editModal = document.getElementById('editUserModal');
     editModal.addEventListener('show.bs.modal', function (event) {
         var button = event.relatedTarget;
@@ -208,9 +231,8 @@
         var userEmail = button.getAttribute('data-user-email');
         var userRole = button.getAttribute('data-user-role');
 
-        // Populate the modal fields with the user data
         var form = editModal.querySelector('form');
-        form.action = '/users/' + userId;  // Update the form action to match the user ID
+        form.action = '/users/' + userId; 
 
         var nameField = editModal.querySelector('#editName');
         nameField.value = userName;
@@ -221,4 +243,19 @@
         var roleField = editModal.querySelector('#editRole');
         roleField.value = userRole;
     });
+
+    function togglePassword(inputId, iconId) {
+        var input = document.getElementById(inputId);
+        var icon = document.getElementById(iconId);
+
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("bi-eye");
+            icon.classList.add("bi-eye-slash");
+        } else {
+            input.type = "password";
+            icon.classList.remove("bi-eye-slash");
+            icon.classList.add("bi-eye");
+        }
+    }
 </script>

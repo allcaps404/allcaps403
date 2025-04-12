@@ -22,7 +22,6 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-// Authentication routes
 Route::controller(LoginController::class)->group(function () {
     Route::post('/store', 'store')->name('store');
     Route::post('/authenticate', 'authenticate')->name('authenticate');
@@ -30,13 +29,11 @@ Route::controller(LoginController::class)->group(function () {
     Route::get('/login', 'login')->name('login')->middleware('guest');
 });
 
-// Dashboard route (accessible to authenticated users)
 Route::prefix('dashboard')->middleware(['auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/dashboard-data', [DashboardController::class, 'getDashboardData'])->name('dashboard.getDashboardData');
 });
 
-// User management and log routes (restricted to admin role)
 Route::middleware(['auth'])->group(function () {
     Route::get('log', [UserController::class, 'viewReport'])->name('log');
     Route::middleware(['role:admin'])->group(function () {
@@ -57,6 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings/toggle-automatic/{id}', [SettingController::class, 'toggleAutomatic'])->name('settings.toggle.automatic');
     Route::get('/settings', [SettingController::class, 'showSettings'])->name('settings.index');
     Route::post('/settings/control', [SettingController::class, 'controlDevice'])->name('settings.control');
+    Route::post('/settings/update-values/{id}', [SettingController::class, 'updateValues']);
 });
 
 Route::post('/notifications/{notificationId}/read', [RelayNotificationController::class, 'markAsRead']);

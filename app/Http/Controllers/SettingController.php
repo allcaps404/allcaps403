@@ -76,4 +76,21 @@ class SettingController extends Controller
 
         return response()->json(['message' => 'Setting not found!'], 404);
     }
+
+    public function updateValues(Request $request, $id)
+    {
+        $setting = Setting::find($id);
+
+        if ($setting) {
+            $setting->soilmoisture = $request->soilmoisture;
+            $setting->temperature = $request->temperature;
+            $setting->humidity = $request->humidity;
+            $setting->save();
+
+            return response()->json(['message' => 'Values updated successfully!']);
+        }
+
+        return response()->json(['message' => 'Setting not found!'], 404);
+    }
 }
+

@@ -17,13 +17,17 @@ class EnvironmentDataController extends Controller
 
     public function index(Request $request)
     {
-        $data = EnvironmentData::orderBy('created_at', 'desc')->paginate($this->perPage);
+        $data = EnvironmentData::where('created_at', '>=', Carbon::now()->subMinute())
+        ->orderBy('created_at', 'desc')
+        ->paginate($this->perPage);
         return view('admin.logs.log', compact('data'));
     }
 
     public function viewChart(Request $request)
     {
-        $data = EnvironmentData::orderBy('created_at', 'desc')->paginate($this->perPage);
+        $data = EnvironmentData::where('created_at', '>=', Carbon::now()->subMinute())
+        ->orderBy('created_at', 'desc')
+        ->paginate($this->perPage);
         return view('admin.logs.chart', compact('data'));
     }
 
@@ -32,17 +36,7 @@ class EnvironmentDataController extends Controller
 
         $currentDate = Carbon::now();
         
-        EnvironmentData::whereDate('created_at', '<', $currentDate->toDateString())->delete();
-
-        // $currentTimestamp = now();
-        // $lastEntry = EnvironmentData::latest('created_at')->first();
-    
-        // if ($lastEntry && $currentTimestamp->diffInMinutes($lastEntry->created_at) < 1) {
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => 'Data can only be saved every 1 minutes.',
-        //     ], 429);
-        // }
+        // EnvironmentData::whereDate('created_at', '<', $currentDate->toDateString())->delete();
 
         \Log::debug('Incoming request data: ', $request->all());
         $saveData = new EnvironmentData;
@@ -62,7 +56,7 @@ class EnvironmentDataController extends Controller
     public function exportExcel(Request $request)
     {
         $request->validate([
-            'filename' => 'required|string|max:255',
+            'filename' => 'required|string',
             'pages' => 'required|string',
         ]);
 
